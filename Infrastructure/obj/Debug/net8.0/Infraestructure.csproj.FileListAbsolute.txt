@@ -1,0 +1,11 @@
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\bin\Debug\net8.0\Infraestructure.deps.json
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\bin\Debug\net8.0\Infraestructure.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\bin\Debug\net8.0\Infraestructure.pdb
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\Infraestructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\Infraestructure.AssemblyInfoInputs.cache
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\Infraestructure.AssemblyInfo.cs
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\Infraestructure.csproj.CoreCompileInputs.cache
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\Infraestructure.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\refint\Infraestructure.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\Infraestructure.pdb
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Infraestructure\obj\Debug\net8.0\ref\Infraestructure.dll

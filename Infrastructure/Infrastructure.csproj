@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Infraestructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Advertisement\" />
+      <Folder Include="Exercise\" />
+      <Folder Include="Notification\" />
+      <Folder Include="Ranking\" />
+      <Folder Include="Security\" />
+      <Folder Include="Transaction\" />
+      <Folder Include="UserStats\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
+      <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.5" />
+    </ItemGroup>
+
+</Project>

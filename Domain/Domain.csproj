@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Advertisement\" />
+      <Folder Include="Exercise\" />
+      <Folder Include="Notification\" />
+      <Folder Include="Ranking\" />
+      <Folder Include="Security\Model\Entities\" />
+      <Folder Include="Shared\Model\" />
+      <Folder Include="Transaction\" />
+      <Folder Include="UserStats\" />
+    </ItemGroup>
+
+</Project>
