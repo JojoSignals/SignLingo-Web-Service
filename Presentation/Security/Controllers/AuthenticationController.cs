@@ -1,5 +1,8 @@
+using Domain.Security.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Security.Resources;
+using Presentation.Security.Transform;
 
 namespace Presentation.Security.Controllers
 {
@@ -7,36 +10,34 @@ namespace Presentation.Security.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        // GET: api/<AuthenticationController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IUserCommandService _userCommandService;
+        public AuthenticationController(IUserCommandService userCommandService)
         {
-            return new string[] { "value1", "value2" };
+            _userCommandService = userCommandService;
+        }
+        // GET: api/<AuthenticationController>
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterAsync([FromBody] SignUpResource signUpResource)
+        {
+            var command = SignUpCommandFromResourceAssembler
+                .ToCommandFromResource(signUpResource);
+            
+            var result =  await _userCommandService.Handle(command);
+            
+            return StatusCode(201, result);
         }
 
         // GET api/<AuthenticationController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromBody] SignInResource signInResource)
         {
-            return "value";
+            var command = SignInCommandFromResourceAssembler
+                .ToCommandFromResource(signInResource);
+            
+            var result = await _userCommandService.Handle(command);
+            
+            return Ok(new { message = "User created successfully", token = result.token , userId = result.user.Id });
         }
 
-        // POST api/<AuthenticationController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<AuthenticationController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AuthenticationController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5BIjhqYYAs/euzyLUG8QXdUNN9hYyBIlLkJ9rPREvNaT4zs/x/2vP52SZ5gNZ2SqI0QAteXKATRZNKgrKlwayw==",
+  "dgSpecHash": "ofvQQs4GULe/toRue07eznHGLfNvyktW+EggnAhYAn9f5vYm8NheBojHzy3kOrSHdnR4AiqY+MKYGGydUBLZcQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\JORGE\\RiderProjects\\SignLingo-Web-Service\\Presentation\\Presentation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JORGE\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
+    "C:\\Users\\JORGE\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\JORGE\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\JORGE\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",
     "C:\\Users\\JORGE\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

@@ -47,11 +47,11 @@ public class UserCommandService : IUserCommandService
 
     public async Task<UserResponse> Handle(SignUpCommand command)
     {
-        var userWithSameEmail = _userRepository.GetUserByEmailAsync(command.Email);
+        var userWithSameEmail = await _userRepository.GetUserByEmailAsync(command.Email);
         if (userWithSameEmail != null)
             throw new DuplicatedUserEmailException(command.Email);
         
-        var userWithSameUsername = _userRepository.GetUserByUsernameAsync(command.Username);
+        var userWithSameUsername = await _userRepository.GetUserByUsernameAsync(command.Username);
         if (userWithSameUsername != null)
             throw new DuplicatedUserUsernameException(command.Username);
         
@@ -66,11 +66,11 @@ public class UserCommandService : IUserCommandService
         return userResponse;
     }
 
-    public async Task<UserResponse> Handle(int id, UpdateUserCommand command)
+    public async Task<UserResponse> Handle(UpdateUserCommand command)
     {
-        var userToUpdate = await _userRepository.GetByIdAsync(id);
+        var userToUpdate = await _userRepository.GetByIdAsync(command.Id);
         if (userToUpdate == null)
-            throw new NotFoundEntityIdException(nameof(User), id);
+            throw new NotFoundEntityIdException(nameof(User), command.Id);
         
         var userWithSameUsername = await _userRepository.GetUserByUsernameAsync(command.Username);
         if (userWithSameUsername != null && userToUpdate.Id != userWithSameUsername.Id)

@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "7zO9t0BzqpjwKCihzDEgrk1P8abybPW3qNfiLRYa9QlzJL/CfxbK38ypQ4ykM1jJ2fG108PCcd/Szg+SlXgOBg==",
+  "dgSpecHash": "+HLHB7xSVQV50BjFGhUCdRffU2J6mvoROTHZen7L6sk2DGWSGjuGy9WXvJwpNQzjK5eQLqFBsVk0Qcjcl0kcNw==",
   "success": true,
   "projectFilePath": "C:\\Users\\JORGE\\RiderProjects\\SignLingo-Web-Service\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JORGE\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
+    "C:\\Users\\JORGE\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\JORGE\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\JORGE\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\JORGE\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\JORGE\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"

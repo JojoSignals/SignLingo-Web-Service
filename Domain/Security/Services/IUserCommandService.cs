@@ -8,6 +8,6 @@ public interface IUserCommandService
 {
     Task<(UserResponse user, string token)> Handle(SignInCommand command);
     Task <UserResponse> Handle(SignUpCommand command);
-    Task <UserResponse> Handle(int id, UpdateUserCommand command);
+    Task <UserResponse> Handle(UpdateUserCommand command);
     Task<bool> Handle(DeleteUserCommand command);
 }

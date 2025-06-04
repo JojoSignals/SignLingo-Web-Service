@@ -6,11 +6,11 @@ public class EncryptService : IEncryptService
 {
     public string Encrypt(string password)
     {
-        throw new NotImplementedException();
+        return BCrypt.Net.BCrypt.HashPassword(password);
     }
 
     public bool Verify(string password, string passwordHashed)
     {
-        throw new NotImplementedException();
+        return BCrypt.Net.BCrypt.Verify(password, passwordHashed);
     }
 }
