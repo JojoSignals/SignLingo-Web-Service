@@ -1,3 +1,5 @@
+using Domain.Security.Model.Queries;
+using Domain.Security.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +9,18 @@ namespace Presentation.Security.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserQueryService _userQueryService;
+        public UserController(IUserQueryService userQueryService)
+        {
+            _userQueryService = userQueryService;
+        }
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAllUsers()
         {
-            return new string[] { "value1", "value2" };
+            var query = new GetAllUsersQuery();
+            var result = await _userQueryService.Handle(query);
+            return Ok(result);
         }
 
         // GET api/<UserController>/5

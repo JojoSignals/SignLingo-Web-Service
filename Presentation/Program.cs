@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
 
 
 //Dependency Injection Native
@@ -27,7 +27,7 @@ builder.Services.AddScoped<IEncryptService, EncryptService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //Conexion a MySQL 
-var connectionString = builder.Configuration.GetConnectionString("learningCenterConnection");
+var connectionString = builder.Configuration.GetConnectionString("signLingoCenterConnection");
 
 builder.Services.AddDbContext<AppDbContext>(
     options =>
@@ -44,6 +44,10 @@ builder.Services.AddDbContext<AppDbContext>(
                     .EnableDetailedErrors();
     });
 var app = builder.Build();
+
+//DB-Ensure Creation
+EnsureDatabaseCreation(app);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

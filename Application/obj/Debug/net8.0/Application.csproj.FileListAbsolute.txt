@@ -13,3 +13,4 @@ C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Application\obj\Debug\net8.0\
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Application\obj\Debug\net8.0\refint\Application.dll
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Application\obj\Debug\net8.0\Application.pdb
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Application\obj\Debug\net8.0\ref\Application.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Application\obj\Debug\net8.0\Application.sourcelink.json

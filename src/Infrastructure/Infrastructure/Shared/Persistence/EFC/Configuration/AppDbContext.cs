@@ -23,7 +23,7 @@ public class AppDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseMySQL(_configuration["ConnectionStrings:learningCenterConnection"]);
+            optionsBuilder.UseMySQL(_configuration.GetConnectionString("signLingoCenterConnection"));
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
