@@ -66,11 +66,11 @@ public class UserCommandService : IUserCommandService
         return userResponse;
     }
 
-    public async Task<UserResponse> Handle(UpdateUserCommand command)
+    public async Task<UserResponse> Handle(int id, UpdateUserCommand command)
     {
-        var userToUpdate = await _userRepository.GetByIdAsync(command.Id);
+        var userToUpdate = await _userRepository.GetByIdAsync(id);
         if (userToUpdate == null)
-            throw new NotFoundEntityIdException(nameof(User), command.Id);
+            throw new NotFoundEntityIdException(nameof(User), id);
         
         var userWithSameUsername = await _userRepository.GetUserByUsernameAsync(command.Username);
         if (userWithSameUsername != null && userToUpdate.Id != userWithSameUsername.Id)

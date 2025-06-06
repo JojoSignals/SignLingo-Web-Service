@@ -38,17 +38,16 @@ namespace Presentation.Security.Controllers
         }
         
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserResource updateUserResource)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UpdateUserResource updateUserResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid resource data.");
 
             var command = UpdateUserCommandFromResourceAssembler
-                .ToCommandFromResource(updateUserResource);
+                .ToCommandFromResource(id, updateUserResource);
             
-            var result = await _userCommandService.Handle(command);
-
+            var result = await _userCommandService.Handle(id, command);
             return Ok(result);
         }
 

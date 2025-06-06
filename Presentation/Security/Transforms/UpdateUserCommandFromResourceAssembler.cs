@@ -5,8 +5,8 @@ namespace Presentation.Security.Transform;
 
 public static class UpdateUserCommandFromResourceAssembler
 {
-    public static UpdateUserCommand ToCommandFromResource (UpdateUserResource resource)
+    public static UpdateUserCommand ToCommandFromResource (int id, UpdateUserResource resource)
     {
-        return new UpdateUserCommand(resource.Id, resource.Username, resource.ProfilePicture, resource.CurrentPassword, resource.NewPassword);
+        return new UpdateUserCommand(id, resource.Username, resource.ProfilePicture, resource.CurrentPassword, resource.NewPassword);
     }
 }

@@ -1,4 +1,5 @@
 using Application.Security.Features.CommandServices;
+using Application.Security.Features.OutboundServices;
 using Application.Security.Features.QueryServices;
 using Domain.Security.Repositories;
 using Domain.Security.Services;

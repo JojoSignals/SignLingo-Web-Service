@@ -250,3 +250,8 @@ C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\obj\Debug\net8.0\Presentation.sourcelink.json
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
