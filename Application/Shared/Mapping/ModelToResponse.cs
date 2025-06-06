@@ -10,14 +10,8 @@ public class ModelToResponse : Profile
     public ModelToResponse()
     {
         CreateMap<User, UserResponse>();
-        
-        // De comando a entidad, ignorando el correo
-        CreateMap<UpdateUserCommand, User>()
-            .ForMember(dest => dest.Email, opt => opt.Ignore());
         CreateMap<UpdateUserCommand, UserResponse>();
-        CreateMap<SignUpCommand, User>();
         CreateMap<SignUpCommand, UserResponse>();
-        CreateMap<SignInCommand, User>();
         CreateMap<SignInCommand, UserResponse>();
     }
 }

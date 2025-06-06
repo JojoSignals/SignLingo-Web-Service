@@ -26,9 +26,18 @@ builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEncryptService, EncryptService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
+builder.Services.AddHttpClient();
 
 //Conexion a MySQL 
 var connectionString = builder.Configuration.GetConnectionString("signLingoCenterConnection");
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowTests", policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 builder.Services.AddDbContext<AppDbContext>(
     options =>
@@ -45,7 +54,7 @@ builder.Services.AddDbContext<AppDbContext>(
                     .EnableDetailedErrors();
     });
 var app = builder.Build();
-
+app.UseCors("AllowTests");
 //DB-Ensure Creation
 EnsureDatabaseCreation(app);
 

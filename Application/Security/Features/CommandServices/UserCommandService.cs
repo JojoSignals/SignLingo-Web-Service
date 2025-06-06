@@ -18,18 +18,25 @@ public class UserCommandService : IUserCommandService
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IGoogleCaptchaService _captchaService;
     
-    public UserCommandService(IUserRepository userRepository, IEncryptService encryptService, ITokenService tokenService, IMapper mapper, IUnitOfWork unitOfWork)
+    public UserCommandService(IUserRepository userRepository, IEncryptService encryptService, ITokenService tokenService, IMapper mapper, IUnitOfWork unitOfWork, IGoogleCaptchaService captchaService)
     {
         _userRepository = userRepository;
         _encryptService = encryptService;
         _tokenService = tokenService;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _captchaService = captchaService;
     }
     
     public async Task<(UserResponse user, string token)> Handle(SignInCommand command)
     {
+        var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
+        if (!isCaptchaValid)
+        {
+            throw new InvalidCaptchaException();
+        }
         var existingUser = await _userRepository.GetUserByEmailAsync(command.Email);
         if (existingUser == null)
             throw new InvalidCredentialsException(); 
@@ -47,6 +54,11 @@ public class UserCommandService : IUserCommandService
 
     public async Task<UserResponse> Handle(SignUpCommand command)
     {
+        var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
+        if (!isCaptchaValid)
+        {
+            throw new InvalidCaptchaException();
+        }
         var userWithSameEmail = await _userRepository.GetUserByEmailAsync(command.Email);
         if (userWithSameEmail != null)
             throw new DuplicatedUserEmailException(command.Email);

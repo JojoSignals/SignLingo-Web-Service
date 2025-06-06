@@ -6,7 +6,7 @@ using Presentation.Security.Transform;
 
 namespace Presentation.Security.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -33,11 +33,15 @@ namespace Presentation.Security.Controllers
         {
             var command = SignInCommandFromResourceAssembler
                 .ToCommandFromResource(signInResource);
-            
-            var result = await _userCommandService.Handle(command);
-            
-            return Ok(new { message = "User created successfully", token = result.token , userId = result.user.Id });
-        }
 
+            var result = await _userCommandService.Handle(command);
+
+            return Ok(new
+            {
+                message = "User logged in successfully",
+                token = result.token,
+                userId = result.user.Id
+            });
+        }
     }
 }
