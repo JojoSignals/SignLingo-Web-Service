@@ -1,6 +1,7 @@
 using Application.Security.Features.CommandServices;
 using Application.Security.Features.OutboundServices;
 using Application.Security.Features.QueryServices;
+using Application.Shared.Mapping;
 using Domain.Security.Repositories;
 using Domain.Security.Services;
 using Domain.Shared.Repository;
@@ -16,9 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
-
-
+builder.Services.AddAutoMapper(typeof(RequestToModel),
+    typeof(ModelToResponse)); 
 //Dependency Injection Native
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();

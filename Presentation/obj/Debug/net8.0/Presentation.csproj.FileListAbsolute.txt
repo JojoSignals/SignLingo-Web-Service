@@ -255,3 +255,4 @@ C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\JORGE\RiderProjects\SignLingo-Web-Service\Presentation\bin\Debug\net8.0\appsettings.Production.json
