@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\SignLingo-Web-Service.props" />
-</Project>
