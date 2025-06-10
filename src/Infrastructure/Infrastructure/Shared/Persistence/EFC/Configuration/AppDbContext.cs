@@ -1,4 +1,5 @@
-﻿using Domain.Security.Model.Entities;
+﻿using Domain.ExercisesManager.Model.Aggregates;
+using Domain.Security.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -19,6 +20,7 @@ public class AppDbContext : DbContext
     }
     
     public DbSet<User> Users { get; set; }
+    public DbSet<Exercise> Exercises { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -39,5 +41,14 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.ProfilePictureUrl).HasMaxLength(255);
         builder.Entity<User>().Property(u => u.Role).IsRequired().HasMaxLength(20);
         builder.Entity<User>().Property(u => u.IsVip).HasDefaultValue(false);
+        
+        //Exercise
+        builder.Entity<Exercise>().ToTable("Exercises");
+        builder.Entity<Exercise>().HasKey(ex => ex.Id);
+        builder.Entity<Exercise>().Property(ex => ex.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Exercise>().Property(ex => ex.QestionWord).HasMaxLength(50);
+        
+        
+        
     }
 }
