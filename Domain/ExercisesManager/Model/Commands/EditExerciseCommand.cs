@@ -1,3 +1,3 @@
 namespace Domain.ExercisesManager.Model.Commands;
 
-public record EditExerciseCommand(int Id);
+public record EditExerciseCommand(int Id, string QuestionWord);

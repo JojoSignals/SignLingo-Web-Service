@@ -46,7 +46,7 @@ public class AppDbContext : DbContext
         builder.Entity<Exercise>().ToTable("Exercises");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
         builder.Entity<Exercise>().Property(ex => ex.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<Exercise>().Property(ex => ex.QestionWord).HasMaxLength(50);
+        builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         
         
         
