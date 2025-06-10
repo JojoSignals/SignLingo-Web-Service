@@ -5,10 +5,6 @@ using Infrastructure.Shared.Persistence.EFC.Repositories;
 
 namespace Infrastructure.ExercisesManager.Persistence;
 
-public class ExerciseRepository : BaseRepository<Exercise>, IExerciseRepository
+public class ExerciseRepository(AppDbContext context) : BaseRepository<Exercise>(context), IExerciseRepository
 {
-    public ExerciseRepository(AppDbContext context) : base(context)
-    {
-    }
-    
 }
