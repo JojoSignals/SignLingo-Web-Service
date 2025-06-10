@@ -8,7 +8,7 @@ public interface IExerciseCommandService
 {
     Task<ExerciseResponse> Handle(CreateExerciseCommand command);
     
-    Task<ExerciseResponse> Handle(EditExerciseCommand command);
+    Task<bool> Handle(EditExerciseCommand command);
     
     Task<bool> Handle(DeleteExerciseCommand command);
     
