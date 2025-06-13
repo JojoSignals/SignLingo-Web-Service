@@ -1,10 +1,15 @@
+using Application.ExercisesManager.Features.CommandServices;
+using Application.ExercisesManager.Features.QueryServices;
 using Application.Security.Features.CommandServices;
 using Application.Security.Features.OutboundServices;
 using Application.Security.Features.QueryServices;
 using Application.Shared.Mapping;
+using Domain.ExercisesManager.Repositories;
+using Domain.ExercisesManager.Services;
 using Domain.Security.Repositories;
 using Domain.Security.Services;
 using Domain.Shared.Repository;
+using Infrastructure.ExercisesManager.Persistence;
 using Infrastructure.Security.Persistence;
 using Infrastructure.Shared.Persistence.EFC.Configuration;
 using Infrastructure.Shared.Persistence.EFC.Repositories;
@@ -27,6 +32,12 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEncryptService, EncryptService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
+
+// Dependency Injenction ExercisesManager
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
+builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
+
 builder.Services.AddHttpClient();
 
 //Conexion a MySQL 

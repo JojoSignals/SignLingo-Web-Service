@@ -24,7 +24,7 @@
 
     <ItemGroup>
       <Folder Include="Advertisement\Controllers\" />
-      <Folder Include="Exercise\Controllers\" />
+      <Folder Include="ExercisesManager\Controllers\" />
       <Folder Include="Notification\Controllers\" />
       <Folder Include="Ranking\Controllers\" />
       <Folder Include="Security\Controllers\" />

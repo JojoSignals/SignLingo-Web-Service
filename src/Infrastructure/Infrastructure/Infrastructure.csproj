@@ -8,14 +8,20 @@
 
     <ItemGroup>
       <Folder Include="Advertisement\" />
-      <Folder Include="ExercisesManager\Model\Entities\" />
-      <Folder Include="ExercisesManager\Model\ValueObjects\" />
       <Folder Include="Notification\" />
       <Folder Include="Ranking\" />
-      <Folder Include="Security\Model\Entities\" />
-      <Folder Include="Shared\Model\" />
       <Folder Include="Transaction\" />
       <Folder Include="UserStats\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
+      <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.5" />
     </ItemGroup>
 
 </Project>

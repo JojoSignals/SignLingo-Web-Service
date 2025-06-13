@@ -13,7 +13,6 @@
 
     <ItemGroup>
         <Folder Include="Advertisement\" />
-        <Folder Include="Exercise\" />
         <Folder Include="Notification\" />
         <Folder Include="Ranking\" />
         <Folder Include="Transaction\" />

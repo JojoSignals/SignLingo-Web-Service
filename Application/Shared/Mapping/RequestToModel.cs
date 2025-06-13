@@ -1,4 +1,6 @@
 using AutoMapper;
+using Domain.ExercisesManager.Model.Aggregates;
+using Domain.ExercisesManager.Model.Commands;
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Entities;
 
@@ -12,6 +14,13 @@ public class RequestToModel : Profile
             .ForMember(dest => dest.Email, opt => opt.Ignore());
         CreateMap<SignUpCommand, User>();
         CreateMap<SignInCommand, User>();
+        
+        //ExerciseManagerMappers
+        
+        CreateMap<EditExerciseCommand, Exercise>();
+        CreateMap<DeleteExerciseCommand, Exercise>();
+        CreateMap<CreateExerciseCommand, Exercise>();
+        
     }
     
 }
