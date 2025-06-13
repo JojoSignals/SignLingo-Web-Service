@@ -38,7 +38,7 @@ namespace Presentation.ExercisesManager.Controllers
             return Ok(result);
         }
        
-
+        // DIEGOOOOOOOOOOOOOOO
         // POST api/<ExerciseController>
         [HttpPost("createExercise")]
         public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseResource resource)
