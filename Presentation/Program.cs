@@ -82,6 +82,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var app = builder.Build();
 app.UseCors("AllowTests");
 //DB-Ensure Creation
+
 EnsureDatabaseCreation(app);
 
 
