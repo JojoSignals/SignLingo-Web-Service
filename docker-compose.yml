@@ -22,7 +22,7 @@ services:
       timeout: 10s
       retries: 10
 
-  webapi:
+  web:
     build:
       context: .
       dockerfile: Presentation/Dockerfile
