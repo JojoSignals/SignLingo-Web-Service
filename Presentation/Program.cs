@@ -41,7 +41,8 @@ builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
 builder.Services.AddHttpClient();
 
 //Conexion a MySQL 
-var connectionString = builder.Configuration.GetConnectionString("signLingoCenterConnection");
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ??
+                       builder.Configuration.GetConnectionString("signLingoCenterConnection");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowTests", policy =>
@@ -50,20 +51,34 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<AppDbContext>(
-    options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    if (connectionString != null)
     {
-        if (connectionString != null)
-            if (builder.Environment.IsDevelopment())
-                options.UseMySQL(connectionString)
-                    .LogTo(Console.WriteLine, LogLevel.Information)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors();
-            else if (builder.Environment.IsProduction())
-                options.UseMySQL(connectionString)
-                    .LogTo(Console.WriteLine, LogLevel.Error)
-                    .EnableDetailedErrors();
-    });
+        options.UseMySQL(connectionString, mysqlOptions =>
+        {
+            mysqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorNumbersToAdd: null);
+        });
+
+        if (builder.Environment.IsDevelopment())
+        {
+            options
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
+        }
+        else if (builder.Environment.IsProduction())
+        {
+            options
+                .LogTo(Console.WriteLine, LogLevel.Error)
+                .EnableDetailedErrors();
+        }
+    }
+});
+
 var app = builder.Build();
 app.UseCors("AllowTests");
 //DB-Ensure Creation
