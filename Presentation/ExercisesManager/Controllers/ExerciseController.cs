@@ -15,6 +15,14 @@ namespace Presentation.ExercisesManager.Controllers
         
         private readonly IExerciseQueryService _exerciseQueryService;
         private readonly IExerciseCommandService _exerciseCommandService;
+
+
+        public ExerciseController(IExerciseQueryService exerciseQueryService,
+            IExerciseCommandService exerciseCommandService)
+        {
+            _exerciseQueryService = exerciseQueryService;
+            _exerciseCommandService = exerciseCommandService;
+        }
         
         // GET: api/<ExerciseController>
         //ALL EXERCISES
@@ -43,17 +51,6 @@ namespace Presentation.ExercisesManager.Controllers
         [HttpPost("createExercise")]
         public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseResource resource)
         {
-            if (resource == null)
-            {
-                return BadRequest("El recurso enviado no puede ser nulo.");
-            }
-
-            // Validación explícita para QuestionWord (necesaria aunque sea required en el record)
-            if (string.IsNullOrEmpty(resource.QuestionWord))
-            {
-                return BadRequest("El campo 'QuestionWord' es obligatorio.");
-            }
-            
             var command = CreateExerciseCommandFromResourceAssembler
                 .ToCommandFromResource(resource);
             
