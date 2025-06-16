@@ -85,17 +85,19 @@ app.UseCors("AllowTests");
 
 EnsureDatabaseCreation(app);
 
-
+app.UseSwagger();
+app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    
 }
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseAuthorization();
