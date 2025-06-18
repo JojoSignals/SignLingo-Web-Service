@@ -6,5 +6,5 @@ namespace Domain.ExercisesManager.Services;
 public interface IUnitQueryService
 {
     Task<IReadOnlyCollection<UnitResponse>> Handle(GetAllUnitsQuery query);
-    Task<ExerciseResponse?> Handle(GetUnitByIdQuery query);
+    Task<UnitResponse?> Handle(GetUnitByIdQuery query);
 }
