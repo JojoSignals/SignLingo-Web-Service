@@ -5,5 +5,5 @@ namespace Domain.ExercisesManager.Repositories;
 
 public interface IUnitRepository : IBaseRepository<Unit>
 {
-    Task<Unit?> GetUnitByTitleAsync(string title);
+    Task<Unit?> GetUnitByNameAsync(string name);
 }
