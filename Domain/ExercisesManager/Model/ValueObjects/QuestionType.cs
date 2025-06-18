@@ -5,6 +5,6 @@ public enum QuestionType
     SelectWord,
     SelectImage,
     ScanImage,
-    ScanWord
+    ScanWord,
     
 }
