@@ -2,5 +2,5 @@ namespace Domain.ExercisesManager.Model.Responses;
 
 public class UnitResponse
 {
-    string Name { get; set; }
+  public string Name { get; set; }
 }

@@ -4,5 +4,5 @@ namespace Domain.ExercisesManager.Model.Entities;
 
 public class Unit : BaseModel
 {
-    string Name { get; set; }
+   public string Name { get; set; }
 }
