@@ -1,4 +1,5 @@
 ﻿using Domain.ExercisesManager.Model.Aggregates;
+using Domain.ExercisesManager.Model.Entities;
 using Domain.Security.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ public class AppDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
+    public DbSet<Unit> Units { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -47,7 +49,10 @@ public class AppDbContext : DbContext
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         
-        
+        //Unit
+        builder.Entity<Unit>().ToTable("Units");
+        builder.Entity<Unit>().HasKey(u => u.Id);
+        builder.Entity<Unit>().Property(u=>u.Name).IsRequired().HasMaxLength(50);
         
     }
 }
