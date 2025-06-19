@@ -37,6 +37,9 @@ builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
+builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
+builder.Services.AddScoped<IUnitCommandService, UnitCommandService>();
 
 builder.Services.AddHttpClient();
 
