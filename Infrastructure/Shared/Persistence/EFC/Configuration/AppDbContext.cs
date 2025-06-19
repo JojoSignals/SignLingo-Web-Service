@@ -23,6 +23,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Unit> Units { get; set; }
+    public DbSet<Icon> Icons { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -54,5 +55,9 @@ public class AppDbContext : DbContext
         builder.Entity<Unit>().HasKey(u => u.Id);
         builder.Entity<Unit>().Property(u=>u.Name).IsRequired().HasMaxLength(50);
         
+        //Icon
+        builder.Entity<Icon>().ToTable("Icons");
+        builder.Entity<Icon>().HasKey(I => I.Id);
+        builder.Entity<Icon>().Property(I=>I.UrlImage).HasMaxLength(255);
     }
 }
