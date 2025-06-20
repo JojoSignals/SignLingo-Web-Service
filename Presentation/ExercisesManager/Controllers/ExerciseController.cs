@@ -46,6 +46,16 @@ namespace Presentation.ExercisesManager.Controllers
             return Ok(result);
         }
        
+        //GET EXERCISE BY QuestionTypeID
+        [HttpGet("get-by-questiontype/{id}")]
+        public async Task<IActionResult> GetExerciseByQuestionTypeIdAsync(int id)
+        {
+            var query = new GetAllExercisesByQuestionTypeIdQuery(id);
+            var result = await _exerciseQueryService.Handle(query);
+            
+            return Ok(result);
+        }
+        
         // DIEGOOOOOOOOOOOOOOO
         // POST api/<ExerciseController>
         [HttpPost("createExercise")]

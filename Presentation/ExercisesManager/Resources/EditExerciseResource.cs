@@ -1,5 +1,6 @@
 namespace Presentation.ExercisesManager.Resources;
 
 public record EditExerciseResource(
-    string QuestionWord
+    string QuestionWord,
+    int QuestionTypeId
     );

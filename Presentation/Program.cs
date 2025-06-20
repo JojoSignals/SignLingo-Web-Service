@@ -34,9 +34,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
 
 // Dependency Injenction ExercisesManager
+//Exercise
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
+//QuestionType
+builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
 
 builder.Services.AddHttpClient();
 
