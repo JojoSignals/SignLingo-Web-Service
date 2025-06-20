@@ -92,5 +92,7 @@ void EnsureDatabaseCreation(WebApplication app)
     {
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         context.Database.EnsureCreated();
+        Console.WriteLine("AQUI ESTA ENSURE DATA BASE");
+        AppDbContextSeed.LoadQuestionType(context);
     }
 }
