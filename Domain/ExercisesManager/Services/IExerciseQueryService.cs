@@ -7,4 +7,6 @@ public interface IExerciseQueryService
 {
     Task<IReadOnlyCollection<ExerciseResponse>> Handle(GetAllExercisesQuery query);
     Task<ExerciseResponse?> Handle(GetExerciseByIdQuery query);
+    
+    Task<IReadOnlyCollection<ExerciseResponse>> Handle(GetAllExercisesByQuestionTypeIdQuery query);
 }

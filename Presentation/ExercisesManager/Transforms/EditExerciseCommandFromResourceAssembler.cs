@@ -8,6 +8,7 @@ public static class EditExerciseCommandFromResourceAssembler
     public static EditExerciseCommand ToCommandFromResource(int id, EditExerciseResource resource) =>
         new EditExerciseCommand(
             id,
-            resource.QuestionWord
+            resource.QuestionWord,
+            resource.QuestionTypeId
         );
 }

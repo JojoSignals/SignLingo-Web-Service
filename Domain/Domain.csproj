@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="Advertisement\" />
       <Folder Include="ExercisesManager\Model\Entities\" />
-      <Folder Include="ExercisesManager\Model\ValueObjects\" />
       <Folder Include="Notification\" />
       <Folder Include="Ranking\" />
       <Folder Include="Security\Model\Entities\" />

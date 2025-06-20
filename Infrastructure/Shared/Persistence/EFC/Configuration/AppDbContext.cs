@@ -1,4 +1,6 @@
 ﻿using Domain.ExercisesManager.Model.Aggregates;
+using Domain.ExercisesManager.Model.Entities;
+using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,8 @@ public class AppDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
+    
+    public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -46,8 +50,18 @@ public class AppDbContext : DbContext
         builder.Entity<Exercise>().ToTable("Exercises");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
+        builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
         
+        //QuestionType
+        builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");
+        builder.Entity<QuestionTypeEntity>().HasKey(q => q.Id);
+        builder.Entity<QuestionTypeEntity>().Property(q => q.Qtype).HasMaxLength(20).IsRequired().HasConversion<string>();
         
-        
+        //Exercise || QuestionType
+        builder.Entity<Exercise>()
+            .HasOne(ex => ex.QuestionType)
+            .WithOne(q => q.Exercise)
+            .HasForeignKey<Exercise>(e => e.QuestionTypeId);
+
     }
 }
