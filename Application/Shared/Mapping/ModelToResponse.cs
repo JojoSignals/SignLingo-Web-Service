@@ -33,6 +33,11 @@ public class ModelToResponse : Profile
         CreateMap<EditIconCommand, IconResponse>();
         CreateMap<CreateIconCommand, IconResponse>();
         CreateMap<DeleteIconCommand, IconResponse>();
+        
+        CreateMap<Level, LevelResponse>();
+        CreateMap<EditLevelCommand, LevelResponse>();
+        CreateMap<CreateLevelCommand, LevelResponse>();
+        CreateMap<DeleteLevelCommand, LevelResponse>();
 
     }
 }

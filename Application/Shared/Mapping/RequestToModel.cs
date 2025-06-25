@@ -29,6 +29,10 @@ public class RequestToModel : Profile
         CreateMap<EditIconCommand, Icon>();
         CreateMap<DeleteIconCommand, Icon>();
         CreateMap<CreateIconCommand, Icon>();
+        
+        CreateMap<EditLevelCommand, Level>();
+        CreateMap<DeleteLevelCommand, Level>();
+        CreateMap<CreateLevelCommand, Level>();
     }
     
 }
