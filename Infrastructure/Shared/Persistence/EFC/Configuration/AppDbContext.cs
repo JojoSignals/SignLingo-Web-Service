@@ -24,6 +24,7 @@ public class AppDbContext : DbContext
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Unit> Units { get; set; }
     public DbSet<Icon> Icons { get; set; }
+    public DbSet<Level> Levels { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -59,5 +60,29 @@ public class AppDbContext : DbContext
         builder.Entity<Icon>().ToTable("Icons");
         builder.Entity<Icon>().HasKey(I => I.Id);
         builder.Entity<Icon>().Property(I=>I.UrlImage).HasMaxLength(255);
+        
+        //Level
+        builder.Entity<Level>().ToTable("Levels");
+        builder.Entity<Level>().HasKey(l => l.Id);
+        builder.Entity<Level>().Property(l => l.LevelName).IsRequired().HasMaxLength(50);
+        builder.Entity<Level>().Property(l => l.LevelDescription).IsRequired().HasMaxLength(100);
+        builder.Entity<Level>().Property(l=>l.ExperienceRequiered).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l=>l.TotalQuestions).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l=>l.UnitId).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l=>l.IconId).IsRequired().HasDefaultValue(0);
+        
+        //Level --- Unit 
+        builder.Entity<Level>()
+            .HasOne(n => n.Unit)
+            .WithMany(u => u.Levels)
+            .HasForeignKey(n => n.UnitId);
+            
+        
+        //Level --- Icon
+        builder.Entity<Level>()
+            .HasOne(l => l.Icon)
+            .WithOne(i => i.Level)
+            .HasForeignKey<Level>(l => l.IconId);
+        
     }
 }
