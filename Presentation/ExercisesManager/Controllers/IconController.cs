@@ -40,7 +40,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST ICON
-        [HttpPost("createIcon")]
+        [HttpPost("create-icon")]
         public async Task<IActionResult> CreateIconAsync([FromBody] CreateIconResource resource)
         {
             if (resource == null) return BadRequest("Invalid resource data");

@@ -41,7 +41,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST EXERCISE
-        [HttpPost("createUnit")]
+        [HttpPost("create-unit")]
         public async Task<IActionResult> CreateUnitAsync([FromBody] CreateUnitResource resource)
         {
             if (resource == null)

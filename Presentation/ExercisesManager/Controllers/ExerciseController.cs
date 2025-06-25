@@ -58,7 +58,7 @@ namespace Presentation.ExercisesManager.Controllers
         
         // DIEGOOOOOOOOOOOOOOO
         // POST api/<ExerciseController>
-        [HttpPost("createExercise")]
+        [HttpPost("create-exercise")]
         public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseResource resource)
         {
             var command = CreateExerciseCommandFromResourceAssembler

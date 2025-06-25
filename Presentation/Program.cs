@@ -40,15 +40,15 @@ builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
 //QuestionType
 builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
-
+//Unit
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
 builder.Services.AddScoped<IUnitCommandService, UnitCommandService>();
-
+//Icon
 builder.Services.AddScoped<IIconRepository, IconRepository>();
 builder.Services.AddScoped<IIconQueryService, IconQueryService>();
 builder.Services.AddScoped<IIconCommandService, IconCommandService>();
-
+//Level
 builder.Services.AddScoped<ILevelRepository, LevelRepository>();
 builder.Services.AddScoped<ILevelQueryService, LevelQueryService>();
 builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
