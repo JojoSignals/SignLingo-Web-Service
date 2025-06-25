@@ -28,6 +28,11 @@ public class ModelToResponse : Profile
         CreateMap<EditUnitCommand, UnitResponse>();
         CreateMap<CreateUnitCommand, UnitResponse>();
         CreateMap<DeleteUnitCommand, UnitResponse>();
+        
+        CreateMap<Icon, IconResponse>();
+        CreateMap<EditIconCommand, IconResponse>();
+        CreateMap<CreateIconCommand, IconResponse>();
+        CreateMap<DeleteIconCommand, IconResponse>();
 
     }
 }

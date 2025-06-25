@@ -25,6 +25,10 @@ public class RequestToModel : Profile
         CreateMap<EditUnitCommand, Unit>();
         CreateMap<DeleteUnitCommand, Unit>();
         CreateMap<CreateUnitCommand, Unit>();
+
+        CreateMap<EditIconCommand, Icon>();
+        CreateMap<DeleteIconCommand, Icon>();
+        CreateMap<CreateIconCommand, Icon>();
     }
     
 }
