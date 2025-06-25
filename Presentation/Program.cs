@@ -37,12 +37,18 @@ builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
+
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
 builder.Services.AddScoped<IUnitCommandService, UnitCommandService>();
-builder.Services.AddScoped<IIconCommandService, IconCommandService>();
-builder.Services.AddScoped<IIconQueryService, IconQueryService>();
+
 builder.Services.AddScoped<IIconRepository, IconRepository>();
+builder.Services.AddScoped<IIconQueryService, IconQueryService>();
+builder.Services.AddScoped<IIconCommandService, IconCommandService>();
+
+builder.Services.AddScoped<ILevelRepository, LevelRepository>();
+builder.Services.AddScoped<ILevelQueryService, LevelQueryService>();
+builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
 
 builder.Services.AddHttpClient();
 
