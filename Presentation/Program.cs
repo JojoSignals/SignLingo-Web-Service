@@ -41,6 +41,18 @@ builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
 //QuestionType
 builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
 
+builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
+builder.Services.AddScoped<IUnitCommandService, UnitCommandService>();
+
+builder.Services.AddScoped<IIconRepository, IconRepository>();
+builder.Services.AddScoped<IIconQueryService, IconQueryService>();
+builder.Services.AddScoped<IIconCommandService, IconCommandService>();
+
+builder.Services.AddScoped<ILevelRepository, LevelRepository>();
+builder.Services.AddScoped<ILevelQueryService, LevelQueryService>();
+builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
+
 builder.Services.AddHttpClient();
 
 //Conexion a MySQL 
