@@ -34,9 +34,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
 
 // Dependency Injenction ExercisesManager
+//Exercise
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
+//QuestionType
+builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
 
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
@@ -104,5 +107,7 @@ void EnsureDatabaseCreation(WebApplication app)
     {
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         context.Database.EnsureCreated();
+        Console.WriteLine("AQUI ESTA ENSURE DATA BASE");
+        AppDbContextSeed.LoadQuestionType(context);
     }
 }
