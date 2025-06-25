@@ -40,6 +40,9 @@ builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
 builder.Services.AddScoped<IUnitCommandService, UnitCommandService>();
+builder.Services.AddScoped<IIconCommandService, IconCommandService>();
+builder.Services.AddScoped<IIconQueryService, IconQueryService>();
+builder.Services.AddScoped<IIconRepository, IconRepository>();
 
 builder.Services.AddHttpClient();
 
