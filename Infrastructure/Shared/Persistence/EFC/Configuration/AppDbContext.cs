@@ -55,6 +55,12 @@ public class AppDbContext : DbContext
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
         
+        // Ejercicios --- Level
+        builder.Entity<Exercise>()
+            .HasOne(e => e.Level)
+            .WithMany(n => n.Exercises)
+            .HasForeignKey(n => n.LevelId);
+        
         //QuestionType
         builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");
         builder.Entity<QuestionTypeEntity>().HasKey(q => q.Id);
@@ -99,7 +105,6 @@ public class AppDbContext : DbContext
             .WithOne(i => i.Level)
             .HasForeignKey<Level>(l => l.IconId);
         
-
   
 
 

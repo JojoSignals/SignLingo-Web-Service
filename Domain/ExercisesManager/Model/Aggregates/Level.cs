@@ -11,6 +11,8 @@ public class Level : BaseModel
     public int TotalQuestions { get; set; }
     public Unit Unit { get; set; }
     public Icon Icon { get; set; }
+    public List<Exercise> Exercises { get; set; }
+    
     
     public int UnitId { get; set; }
     public int IconId { get; set; }
