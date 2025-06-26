@@ -1,6 +1,9 @@
 using AutoMapper;
 using Domain.ExercisesManager.Model.Aggregates;
-using Domain.ExercisesManager.Model.Commands;
+using Domain.ExercisesManager.Model.Commands.Exercise;
+using Domain.ExercisesManager.Model.Commands.IconCommands;
+using Domain.ExercisesManager.Model.Commands.Level;
+using Domain.ExercisesManager.Model.Commands.Unit;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Entities;

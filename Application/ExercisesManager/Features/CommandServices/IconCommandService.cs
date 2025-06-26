@@ -1,10 +1,13 @@
 using Application.ExercisesManager.Exceptions;
+using Application.ExercisesManager.Exceptions.IconExceptions;
 using AutoMapper;
 using Domain.ExercisesManager.Model.Commands;
+using Domain.ExercisesManager.Model.Commands.IconCommands;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.Responses;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services;
+using Domain.ExercisesManager.Services.IconServices;
 using Domain.Shared.Repository;
 
 namespace Application.ExercisesManager.Features.CommandServices;

@@ -1,10 +1,9 @@
-using Domain.ExercisesManager.Model.Commands;
-using Domain.ExercisesManager.Model.Queries;
-using Domain.ExercisesManager.Services;
-using Microsoft.AspNetCore.Http;
+using Domain.ExercisesManager.Model.Commands.Unit;
+using Domain.ExercisesManager.Model.Queries.Unit;
+using Domain.ExercisesManager.Services.Unit;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ExercisesManager.Resources;
-using Presentation.ExercisesManager.Transforms;
+using Presentation.ExercisesManager.Resources.Unit;
+using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers
 {

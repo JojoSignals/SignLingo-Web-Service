@@ -1,12 +1,11 @@
-using Application.ExercisesManager.Exceptions;
+using Application.ExercisesManager.Exceptions.IconExceptions;
 using Application.Shared.Exceptions;
 using AutoMapper;
 using Domain.ExercisesManager.Model.Entities;
-using Domain.ExercisesManager.Model.Queries;
+using Domain.ExercisesManager.Model.Queries.IconQueries;
 using Domain.ExercisesManager.Model.Responses;
 using Domain.ExercisesManager.Repositories;
-using Domain.ExercisesManager.Services;
-using Domain.Shared.Repository;
+using Domain.ExercisesManager.Services.IconServices;
 
 namespace Application.ExercisesManager.Features.QueryServices;
 

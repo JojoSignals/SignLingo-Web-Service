@@ -1,10 +1,15 @@
 using Domain.ExercisesManager.Model.Commands;
+using Domain.ExercisesManager.Model.Commands.IconCommands;
 using Domain.ExercisesManager.Model.Queries;
+using Domain.ExercisesManager.Model.Queries.IconQueries;
 using Domain.ExercisesManager.Services;
+using Domain.ExercisesManager.Services.IconServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources;
+using Presentation.ExercisesManager.Resources.IconResources;
 using Presentation.ExercisesManager.Transforms;
+using Presentation.ExercisesManager.Transforms.IconTransforms;
 
 namespace Presentation.ExercisesManager.Controllers
 {
