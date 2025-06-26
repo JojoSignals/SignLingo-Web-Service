@@ -1,4 +1,4 @@
-﻿using Domain.ExercisesManager.Model.Aggregates;
+using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Entities;
@@ -23,6 +23,9 @@ public class AppDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
+    public DbSet<Unit> Units { get; set; }
+    public DbSet<Icon> Icons { get; set; }
+    public DbSet<Level> Levels { get; set; }
     
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
     
@@ -52,6 +55,12 @@ public class AppDbContext : DbContext
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
         
+        // Ejercicios --- Level
+        builder.Entity<Exercise>()
+            .HasOne(e => e.Level)
+            .WithMany(n => n.Exercises)
+            .HasForeignKey(n => n.LevelId);
+        
         //QuestionType
         builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");
         builder.Entity<QuestionTypeEntity>().HasKey(q => q.Id);
@@ -62,6 +71,42 @@ public class AppDbContext : DbContext
             .HasOne(ex => ex.QuestionType)
             .WithOne(q => q.Exercise)
             .HasForeignKey<Exercise>(e => e.QuestionTypeId);
+        
+        //Unit
+        builder.Entity<Unit>().ToTable("Units");
+        builder.Entity<Unit>().HasKey(u => u.Id);
+        builder.Entity<Unit>().Property(u=>u.Name).IsRequired().HasMaxLength(50);
+        
+        //Icon
+        builder.Entity<Icon>().ToTable("Icons");
+        builder.Entity<Icon>().HasKey(I => I.Id);
+        builder.Entity<Icon>().Property(I=>I.UrlImage).HasMaxLength(255);
+        
+        //Level
+        builder.Entity<Level>().ToTable("Levels");
+        builder.Entity<Level>().HasKey(l => l.Id);
+        builder.Entity<Level>().Property(l => l.LevelName).IsRequired().HasMaxLength(50);
+        builder.Entity<Level>().Property(l => l.LevelDescription).IsRequired().HasMaxLength(100);
+        builder.Entity<Level>().Property(l=>l.ExperienceRequiered).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l=>l.TotalQuestions).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l=>l.UnitId).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l=>l.IconId).IsRequired().HasDefaultValue(0);
+        
+        //Level --- Unit 
+        builder.Entity<Level>()
+            .HasOne(n => n.Unit)
+            .WithMany(u => u.Levels)
+            .HasForeignKey(n => n.UnitId);
+            
+        
+        //Level --- Icon
+        builder.Entity<Level>()
+            .HasOne(l => l.Icon)
+            .WithOne(i => i.Level)
+            .HasForeignKey<Level>(l => l.IconId);
+        
+  
+
 
     }
 }

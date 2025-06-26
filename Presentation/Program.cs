@@ -5,7 +5,10 @@ using Application.Security.Features.OutboundServices;
 using Application.Security.Features.QueryServices;
 using Application.Shared.Mapping;
 using Domain.ExercisesManager.Repositories;
-using Domain.ExercisesManager.Services;
+using Domain.ExercisesManager.Services.Exercise;
+using Domain.ExercisesManager.Services.IconServices;
+using Domain.ExercisesManager.Services.Level;
+using Domain.ExercisesManager.Services.Unit;
 using Domain.Security.Repositories;
 using Domain.Security.Services;
 using Domain.Shared.Repository;
@@ -40,6 +43,18 @@ builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
 //QuestionType
 builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
+//Unit
+builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();
+builder.Services.AddScoped<IUnitCommandService, UnitCommandService>();
+//Icon
+builder.Services.AddScoped<IIconRepository, IconRepository>();
+builder.Services.AddScoped<IIconQueryService, IconQueryService>();
+builder.Services.AddScoped<IIconCommandService, IconCommandService>();
+//Level
+builder.Services.AddScoped<ILevelRepository, LevelRepository>();
+builder.Services.AddScoped<ILevelQueryService, LevelQueryService>();
+builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
 
 builder.Services.AddHttpClient();
 

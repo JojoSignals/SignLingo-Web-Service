@@ -1,12 +1,15 @@
 using Application.ExercisesManager.Exceptions;
+using Application.ExercisesManager.Exceptions.Exercise;
 using Application.Shared.Exceptions;
 using AutoMapper;
 using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.Queries;
+using Domain.ExercisesManager.Model.Queries.Exercise;
 using Domain.ExercisesManager.Model.Responses;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services;
+using Domain.ExercisesManager.Services.Exercise;
 
 namespace Application.ExercisesManager.Features.QueryServices;
 

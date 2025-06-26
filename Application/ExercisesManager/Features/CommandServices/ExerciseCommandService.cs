@@ -1,10 +1,13 @@
 using Application.ExercisesManager.Exceptions;
+using Application.ExercisesManager.Exceptions.Exercise;
 using AutoMapper;
 using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Commands;
+using Domain.ExercisesManager.Model.Commands.Exercise;
 using Domain.ExercisesManager.Model.Responses;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services;
+using Domain.ExercisesManager.Services.Exercise;
 using Domain.Shared.Repository;
 
 namespace Application.ExercisesManager.Features.CommandServices;

@@ -1,6 +1,10 @@
 using AutoMapper;
 using Domain.ExercisesManager.Model.Aggregates;
-using Domain.ExercisesManager.Model.Commands;
+using Domain.ExercisesManager.Model.Commands.Exercise;
+using Domain.ExercisesManager.Model.Commands.IconCommands;
+using Domain.ExercisesManager.Model.Commands.Level;
+using Domain.ExercisesManager.Model.Commands.Unit;
+using Domain.ExercisesManager.Model.Entities;
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Entities;
 
@@ -20,7 +24,18 @@ public class RequestToModel : Profile
         CreateMap<EditExerciseCommand, Exercise>();
         CreateMap<DeleteExerciseCommand, Exercise>();
         CreateMap<CreateExerciseCommand, Exercise>();
+
+        CreateMap<EditUnitCommand, Unit>();
+        CreateMap<DeleteUnitCommand, Unit>();
+        CreateMap<CreateUnitCommand, Unit>();
+
+        CreateMap<EditIconCommand, Icon>();
+        CreateMap<DeleteIconCommand, Icon>();
+        CreateMap<CreateIconCommand, Icon>();
         
+        CreateMap<EditLevelCommand, Level>();
+        CreateMap<DeleteLevelCommand, Level>();
+        CreateMap<CreateLevelCommand, Level>();
     }
     
 }

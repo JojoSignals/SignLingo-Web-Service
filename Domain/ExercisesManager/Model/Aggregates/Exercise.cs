@@ -8,6 +8,8 @@ public class Exercise : BaseModel
 {
     public string QuestionWord { get; set; }
     public QuestionTypeEntity QuestionType { get; set; }
+    public Level Level { get; set; }
     
     public int QuestionTypeId { get; set; }
+    public int LevelId { get; set; }
 }

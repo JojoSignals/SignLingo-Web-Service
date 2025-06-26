@@ -1,6 +1,10 @@
 using AutoMapper;
 using Domain.ExercisesManager.Model.Aggregates;
-using Domain.ExercisesManager.Model.Commands;
+using Domain.ExercisesManager.Model.Commands.Exercise;
+using Domain.ExercisesManager.Model.Commands.IconCommands;
+using Domain.ExercisesManager.Model.Commands.Level;
+using Domain.ExercisesManager.Model.Commands.Unit;
+using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.Responses;
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Entities;
@@ -20,7 +24,23 @@ public class ModelToResponse : Profile
         // Exercises Manager
         CreateMap<Exercise, ExerciseResponse>();
         CreateMap<EditExerciseCommand, ExerciseResponse>();
-        CreateMap<DeleteExerciseCommand, ExerciseResponse>();
         CreateMap<CreateExerciseCommand, ExerciseResponse>();
+        CreateMap<DeleteExerciseCommand, ExerciseResponse>();
+
+        CreateMap<Unit, UnitResponse>();
+        CreateMap<EditUnitCommand, UnitResponse>();
+        CreateMap<CreateUnitCommand, UnitResponse>();
+        CreateMap<DeleteUnitCommand, UnitResponse>();
+        
+        CreateMap<Icon, IconResponse>();
+        CreateMap<EditIconCommand, IconResponse>();
+        CreateMap<CreateIconCommand, IconResponse>();
+        CreateMap<DeleteIconCommand, IconResponse>();
+        
+        CreateMap<Level, LevelResponse>();
+        CreateMap<EditLevelCommand, LevelResponse>();
+        CreateMap<CreateLevelCommand, LevelResponse>();
+        CreateMap<DeleteLevelCommand, LevelResponse>();
+
     }
 }

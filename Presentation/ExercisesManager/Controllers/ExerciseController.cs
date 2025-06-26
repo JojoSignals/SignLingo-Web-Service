@@ -1,10 +1,10 @@
-using Domain.ExercisesManager.Model.Commands;
-using Domain.ExercisesManager.Model.Queries;
-using Domain.ExercisesManager.Services;
+using Domain.ExercisesManager.Model.Commands.Exercise;
+using Domain.ExercisesManager.Model.Queries.Exercise;
+using Domain.ExercisesManager.Services.Exercise;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ExercisesManager.Resources;
-using Presentation.ExercisesManager.Transforms;
+using Presentation.ExercisesManager.Resources.Exercise;
+using Presentation.ExercisesManager.Transforms.Exercise;
 
 namespace Presentation.ExercisesManager.Controllers
 {
@@ -58,7 +58,7 @@ namespace Presentation.ExercisesManager.Controllers
         
         // DIEGOOOOOOOOOOOOOOO
         // POST api/<ExerciseController>
-        [HttpPost("createExercise")]
+        [HttpPost("create-exercise")]
         public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseResource resource)
         {
             var command = CreateExerciseCommandFromResourceAssembler
