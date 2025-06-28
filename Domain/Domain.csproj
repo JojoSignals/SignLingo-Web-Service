@@ -14,7 +14,8 @@
       <Folder Include="Security\Model\Entities\" />
       <Folder Include="Shared\Model\" />
       <Folder Include="Transaction\" />
-      <Folder Include="UserStats\" />
+      <Folder Include="UserStats\Model\Entities\" />
+      <Folder Include="UserStats\Model\ValueObjects\" />
     </ItemGroup>
 
 </Project>

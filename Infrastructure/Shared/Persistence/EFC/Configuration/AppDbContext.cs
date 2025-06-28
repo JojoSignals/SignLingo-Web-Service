@@ -4,6 +4,7 @@ using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Domain.UserStats.Model.Agreggates;
 
 namespace Infrastructure.Shared.Persistence.EFC.Configuration;
 
@@ -26,7 +27,8 @@ public class AppDbContext : DbContext
     public DbSet<Unit> Units { get; set; }
     public DbSet<Icon> Icons { get; set; }
     public DbSet<Level> Levels { get; set; }
-    
+    public DbSet<UserStat> UserStats { get; set; }
+
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -106,7 +108,15 @@ public class AppDbContext : DbContext
             .HasForeignKey<Level>(l => l.IconId);
         
   
-
+        //UserStats
+        builder.Entity<UserStat>().ToTable("UserStats");
+        builder.Entity<UserStat>().HasKey(us => us.Id);
+        builder.Entity<UserStat>().Property(us => us.Lives).IsRequired();
+        builder.Entity<UserStat>().Property(us => us.Stars).IsRequired();
+        builder.Entity<UserStat>().Property(us => us.TotalLivesLost).IsRequired();
+        builder.Entity<UserStat>().Property(us => us.TotalAdsWatched).IsRequired();
+        builder.Entity<UserStat>().Property(us => us.QuestionsComplete).IsRequired();
+        builder.Entity<UserStat>().Property(us => us.UserId).IsRequired();
 
     }
 }

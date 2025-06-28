@@ -16,7 +16,6 @@
         <Folder Include="Notification\" />
         <Folder Include="Ranking\" />
         <Folder Include="Transaction\" />
-        <Folder Include="UserStats\" />
     </ItemGroup>
 
     <ItemGroup>

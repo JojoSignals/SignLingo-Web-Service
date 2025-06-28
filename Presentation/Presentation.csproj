@@ -30,7 +30,6 @@
       <Folder Include="Security\Controllers\" />
       <Folder Include="Shared\Controllers\" />
       <Folder Include="Transaction\Controllers\" />
-      <Folder Include="UserStats\Controllers\" />
     </ItemGroup>
 
     <ItemGroup>

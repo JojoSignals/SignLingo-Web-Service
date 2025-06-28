@@ -17,6 +17,10 @@ using Infrastructure.Security.Persistence;
 using Infrastructure.Shared.Persistence.EFC.Configuration;
 using Infrastructure.Shared.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Application.UserStats.Features.CommandServices;
+using Application.UserStats.Features.QueryServices;
+using Domain.UserStats.Repositories;
+using Infrastructure.UserStats.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +59,13 @@ builder.Services.AddScoped<IIconCommandService, IconCommandService>();
 builder.Services.AddScoped<ILevelRepository, LevelRepository>();
 builder.Services.AddScoped<ILevelQueryService, LevelQueryService>();
 builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
+
+// Dependency Injection UserStats
+builder.Services.AddScoped<IUserStatsRepository, UserStatRepository>();
+builder.Services.AddScoped<UserStatCommandService>(); 
+builder.Services.AddScoped<UserStatQueryService>();
+
+
 
 builder.Services.AddHttpClient();
 
