@@ -25,6 +25,7 @@ public class AppDbContext : DbContext
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Unit> Units { get; set; }
     public DbSet<Icon> Icons { get; set; }
+    public DbSet<Option> Options { get; set; }
     public DbSet<Level> Levels { get; set; }
     
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
@@ -49,17 +50,25 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.Role).IsRequired().HasMaxLength(20);
         builder.Entity<User>().Property(u => u.IsVip).HasDefaultValue(false);
         
-        //Exercise
+        // Exercise
         builder.Entity<Exercise>().ToTable("Exercises");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
         
-        // Ejercicios --- Level
+        // Exercises --- Levels
         builder.Entity<Exercise>()
             .HasOne(e => e.Level)
             .WithMany(n => n.Exercises)
             .HasForeignKey(n => n.LevelId);
+        
+        // Option
+        builder.Entity<Option>().ToTable("Options");
+        builder.Entity<Option>().HasKey(op => op.Id);
+        builder.Entity<Option>().Property(op => op.Word).IsRequired().HasMaxLength(20);
+        builder.Entity<Option>().Property(op => op.UrlImage);
+        
+        //ExerciseOption
         
         //QuestionType
         builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");
