@@ -15,7 +15,7 @@
     <ItemGroup>
       <Folder Include="Advertisement\" />
       <Folder Include="Notification\" />
-      <Folder Include="Ranking\" />
+      <Folder Include="Ranking\Exceptions\" />
       <Folder Include="Transaction\" />
     </ItemGroup>
 

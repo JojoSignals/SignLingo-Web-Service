@@ -10,7 +10,10 @@
       <Folder Include="Advertisement\" />
       <Folder Include="ExercisesManager\Model\ValueObjects\" />
       <Folder Include="Notification\" />
-      <Folder Include="Ranking\" />
+      <Folder Include="Ranking\Model\Agreggates\" />
+      <Folder Include="Ranking\Model\Queries\" />
+      <Folder Include="Ranking\Model\ValueObjects\" />
+      <Folder Include="Ranking\Services\" />
       <Folder Include="Security\Model\Entities\" />
       <Folder Include="Shared\Model\" />
       <Folder Include="Transaction\" />

@@ -21,6 +21,9 @@ using Application.UserStats.Features.CommandServices;
 using Application.UserStats.Features.QueryServices;
 using Domain.UserStats.Repositories;
 using Infrastructure.UserStats.Persistence;
+using Application.Ranking.Features.QueryServices;
+using Domain.Ranking.Repositories;
+using Infrastructure.Ranking.Persistence.EFC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +67,9 @@ builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
 builder.Services.AddScoped<IUserStatsRepository, UserStatRepository>();
 builder.Services.AddScoped<UserStatCommandService>(); 
 builder.Services.AddScoped<UserStatQueryService>();
-
+//Dependency Injection Ranking
+builder.Services.AddScoped<IRankingRepository, RankingRepository>();
+builder.Services.AddScoped<IRankingQueryService, RankingQueryService>();
 
 
 builder.Services.AddHttpClient();
