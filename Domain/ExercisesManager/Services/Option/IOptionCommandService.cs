@@ -5,7 +5,7 @@ namespace Domain.ExercisesManager.Services.Option;
 
 public interface IOptionCommandService
 {
-    Task<LevelResponse> Handle(CreateOptionCommand command);
+    Task<OptionResponse> Handle(CreateOptionCommand command);
     
     Task<bool> Handle(EditOptionCommand command);
     
