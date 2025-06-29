@@ -25,6 +25,7 @@ public class AppDbContext : DbContext
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Unit> Units { get; set; }
     public DbSet<Icon> Icons { get; set; }
+    public DbSet<Option> Options { get; set; }
     public DbSet<Level> Levels { get; set; }
     
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
@@ -49,17 +50,38 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.Role).IsRequired().HasMaxLength(20);
         builder.Entity<User>().Property(u => u.IsVip).HasDefaultValue(false);
         
-        //Exercise
-        builder.Entity<Exercise>().ToTable("Exercises");
+        // Exercise
+        builder.Entity<Exercise>().ToTable("Exercise");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
         
-        // Ejercicios --- Level
+        // Exercises --- Levels
         builder.Entity<Exercise>()
             .HasOne(e => e.Level)
             .WithMany(n => n.Exercises)
             .HasForeignKey(n => n.LevelId);
+        
+        // Option
+        builder.Entity<Option>().ToTable("Option");
+        builder.Entity<Option>().HasKey(op => op.Id);
+        builder.Entity<Option>().Property(op => op.Word).IsRequired().HasMaxLength(20);
+        builder.Entity<Option>().Property(op => op.UrlImage);
+        
+        //ExerciseOption
+        builder.Entity<ExerciseOption>().ToTable("ExerciseOption");
+        builder.Entity<ExerciseOption>().HasKey(eo => new { eo.ExerciseId, eo.OptionId });
+        builder.Entity<ExerciseOption>().Property(eo=> eo.IsCorrect).HasDefaultValue(false);
+        //ExericseOption Relations
+        builder.Entity<ExerciseOption>()
+            .HasOne(eo => eo.Exercise)
+            .WithMany(e=>e.ExerciseOptions)
+            .HasForeignKey(eo=>eo.ExerciseId);
+        
+        builder.Entity<ExerciseOption>()
+            .HasOne(eo => eo.Option)
+            .WithMany(o=>o.ExerciseOptions)
+            .HasForeignKey(eo=>eo.OptionId);
         
         //QuestionType
         builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");

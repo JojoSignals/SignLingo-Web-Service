@@ -10,4 +10,5 @@ public interface IUserCommandService
     Task <UserResponse> Handle(SignUpCommand command);
     Task <UserResponse> Handle(int id, UpdateUserCommand command);
     Task<bool> Handle(DeleteUserCommand command);
+    Task<bool> Handle(UpdateUserPictureCommand command);
 }

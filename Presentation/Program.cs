@@ -8,14 +8,17 @@ using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services.Exercise;
 using Domain.ExercisesManager.Services.IconServices;
 using Domain.ExercisesManager.Services.Level;
+using Domain.ExercisesManager.Services.Option;
 using Domain.ExercisesManager.Services.Unit;
 using Domain.Security.Repositories;
 using Domain.Security.Services;
 using Domain.Shared.Repository;
+using Domain.Shared.Services;
 using Infrastructure.ExercisesManager.Persistence;
 using Infrastructure.Security.Persistence;
 using Infrastructure.Shared.Persistence.EFC.Configuration;
 using Infrastructure.Shared.Persistence.EFC.Repositories;
+using Infrastructure.Shared.Services.CloudinaryImageService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +58,15 @@ builder.Services.AddScoped<IIconCommandService, IconCommandService>();
 builder.Services.AddScoped<ILevelRepository, LevelRepository>();
 builder.Services.AddScoped<ILevelQueryService, LevelQueryService>();
 builder.Services.AddScoped<ILevelCommandService, LevelCommandService>();
+//Option
+builder.Services.AddScoped<IOptionRepository, OptionRepository>();
+builder.Services.AddScoped<IOptionQueryService, OptionQueryService>();
+builder.Services.AddScoped<IOptionCommandService, OptionCommandService>();
+
+// DI Shared 
+builder.Services.Configure<CloudinaryCredentials>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<IImageManagerService, ImageManagerService>();
+
 
 builder.Services.AddHttpClient();
 

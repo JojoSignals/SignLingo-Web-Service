@@ -3,6 +3,7 @@ using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Commands.Exercise;
 using Domain.ExercisesManager.Model.Commands.IconCommands;
 using Domain.ExercisesManager.Model.Commands.Level;
+using Domain.ExercisesManager.Model.Commands.Option;
 using Domain.ExercisesManager.Model.Commands.Unit;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.Responses;
@@ -20,6 +21,11 @@ public class ModelToResponse : Profile
         CreateMap<UpdateUserCommand, UserResponse>();
         CreateMap<SignUpCommand, UserResponse>();
         CreateMap<SignInCommand, UserResponse>();
+        
+        CreateMap<Option, OptionResponse>();
+        CreateMap<CreateOptionCommand, OptionResponse>();
+        CreateMap<EditOptionCommand, OptionResponse>();
+        CreateMap<DeleteOptionCommand, OptionResponse>();
         
         // Exercises Manager
         CreateMap<Exercise, ExerciseResponse>();
