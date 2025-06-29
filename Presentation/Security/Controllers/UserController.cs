@@ -59,5 +59,16 @@ namespace Presentation.Security.Controllers
             var result = await _userCommandService.Handle(command);
             return Ok(result);
         }
+
+
+        [HttpPut("{id}/picture")]
+        public async Task<IActionResult> UpdateUserProfileAsync(int id, [FromForm] UpdateUserPictureResource resource)
+        {
+            var command = UpdateUserPictureCommandFromResourceAssembler.ToCommandFromResource(id, resource);
+
+            var result = await _userCommandService.Handle(command);
+
+            return Ok(result);
+        }
     }
 }
