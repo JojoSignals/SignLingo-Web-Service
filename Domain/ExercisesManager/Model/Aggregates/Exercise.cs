@@ -12,4 +12,8 @@ public class Exercise : BaseModel
     
     public int QuestionTypeId { get; set; }
     public int LevelId { get; set; }
+    
+    
+    
+    public ICollection<ExerciseOption> ExerciseOptions { get; set; }
 }

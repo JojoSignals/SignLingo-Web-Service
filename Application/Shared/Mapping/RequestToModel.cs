@@ -3,6 +3,7 @@ using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Commands.Exercise;
 using Domain.ExercisesManager.Model.Commands.IconCommands;
 using Domain.ExercisesManager.Model.Commands.Level;
+using Domain.ExercisesManager.Model.Commands.Option;
 using Domain.ExercisesManager.Model.Commands.Unit;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.Security.Model.Commands;
@@ -25,6 +26,10 @@ public class RequestToModel : Profile
         CreateMap<DeleteExerciseCommand, Exercise>();
         CreateMap<CreateExerciseCommand, Exercise>();
 
+        CreateMap<EditOptionCommand, Option>();
+        CreateMap<DeleteOptionCommand, Option>();
+        CreateMap<CreateOptionCommand, Option>();
+        
         CreateMap<EditUnitCommand, Unit>();
         CreateMap<DeleteUnitCommand, Unit>();
         CreateMap<CreateUnitCommand, Unit>();
