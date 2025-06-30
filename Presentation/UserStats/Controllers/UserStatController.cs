@@ -1,9 +1,9 @@
 using Application.UserStats.Features.CommandServices;
 using Application.UserStats.Features.QueryServices;
-using Domain.UserStats.Model.Agreggates;
+using Domain.UserStats.Model.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.UserStats.Resources;
-using Presentation.UserStats.Transform.Assemblers;
+using Presentation.UserStats.Transforms.Assemblers;
 
 namespace Presentation.UserStats.Controllers;
 
@@ -20,18 +20,25 @@ public class UserStatController : ControllerBase
         _queryService = queryService;
     }
 
-    [HttpGet("{id}")]
+    // Buscar por ID (PK)
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<UserStatResource>> GetById(int id)
     {
-        var stat = await _queryService.GetByIdAsync(id);
+        var query = new GetUserStatByIdQuery(id);
+        var stat = await _queryService.Handle(query);
+
         if (stat is null) return NotFound();
         return Ok(UserStatResourceAssembler.ToResource(stat));
     }
 
-    [HttpGet("user/{userId}")]
+    // Buscar por UserId (FK)
+    [HttpGet("user/{userId:int}")]
     public async Task<ActionResult<UserStatResource>> GetByUserId(int userId)
     {
-        var stat = await _queryService.GetByUserIdAsync(userId);
+        var query = new GetUserStatsByUserIdQuery(userId);
+        var stat = await _queryService.Handle(query);
+
+        if (stat is null) return NotFound();
         return Ok(UserStatResourceAssembler.ToResource(stat));
     }
 
@@ -43,7 +50,7 @@ public class UserStatController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = stat.Id }, null);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, UpdateUserStatResource resource)
     {
         var stat = UpdateUserStatCommandAssembler.ToEntity(resource);
@@ -52,7 +59,7 @@ public class UserStatController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _commandService.DeleteAsync(id);

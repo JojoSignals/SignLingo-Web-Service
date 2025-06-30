@@ -7,4 +7,5 @@ public interface IUserStatsQueryService
 {
     Task<UserStatsResponse?> Handle(GetUserStatsByUserIdQuery query);
     Task<IReadOnlyCollection<UserStatsResponse>> Handle(GetAllUserStatsQuery query);
+    Task<UserStatsResponse?> Handle(GetUserStatByIdQuery query);
 }

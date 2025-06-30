@@ -1,34 +1,38 @@
 using Application.UserStats.Exceptions;
+using AutoMapper;
 using Domain.UserStats.Model.Agreggates;
+using Domain.UserStats.Model.Queries;
+using Domain.UserStats.Model.Responses;
 using Domain.UserStats.Repositories;
+using Domain.UserStats.Services;
 
 namespace Application.UserStats.Features.QueryServices;
 
-public class UserStatQueryService
+public class UserStatQueryService : IUserStatsQueryService
 {
     private readonly IUserStatsRepository _repository;
+    private readonly IMapper _mapper;
 
-    public UserStatQueryService(IUserStatsRepository repository)
+    public UserStatQueryService(IUserStatsRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
+    }
+    public async Task<UserStatsResponse?> Handle(GetUserStatByIdQuery query)
+    {
+        var stat = await _repository.GetByIdAsync(query.Id);
+        return stat is null ? null : _mapper.Map<UserStatsResponse>(stat);
     }
 
-    public async Task<UserStat> GetByUserIdAsync(int userId)
+    public async Task<UserStatsResponse?> Handle(GetUserStatsByUserIdQuery query)
     {
-        var stat = await _repository.GetByUserIdAsync(userId);
-        if (stat is null)
-            throw new UserStatNotFoundException(userId);
-
-        return stat;
+        var stat = await _repository.GetByUserIdAsync(query.UserId);
+        return stat is null ? null : _mapper.Map<UserStatsResponse>(stat);
     }
 
-    public async Task<IReadOnlyCollection<UserStat>> GetAllAsync()
+    public async Task<IReadOnlyCollection<UserStatsResponse>> Handle(GetAllUserStatsQuery query)
     {
-        return await _repository.GetAllAsync();
-    }
-
-    public async Task<UserStat?> GetByIdAsync(int id)
-    {
-        return await _repository.GetByIdAsync(id);
+        var stats = await _repository.GetAllAsync();
+        return _mapper.Map<IReadOnlyCollection<UserStatsResponse>>(stats);
     }
 }

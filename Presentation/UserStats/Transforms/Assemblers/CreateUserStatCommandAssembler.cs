@@ -2,20 +2,24 @@
 using Domain.UserStats.Model.Agreggates;
 using Presentation.UserStats.Resources;
 
-namespace Presentation.UserStats.Transform.Assemblers;
-
-public static class CreateUserStatCommandAssembler
+namespace Presentation.UserStats.Transforms.Assemblers
 {
-    public static UserStat ToEntity(CreateUserStatResource resource)
+    public static class CreateUserStatCommandAssembler
     {
-        return new UserStat
+        public static UserStat ToEntity(CreateUserStatResource resource)
         {
-            Lives = resource.Lives,
-            Stars = resource.Stars,
-            TotalLivesLost = resource.TotalLivesLost,
-            TotalAdsWatched = resource.TotalAdsWatched,
-            QuestionsComplete = resource.QuestionsComplete,
-            UserId = resource.UserId
-        };
+            return new UserStat
+            {
+                Lives = resource.Lives,
+                Stars = resource.Stars,
+                TotalLivesLost = resource.TotalLivesLost,
+                TotalAdsWatched = resource.TotalAdsWatched,
+                QuestionsComplete = resource.QuestionsComplete,
+                UserId = resource.UserId
+            };
+        }
     }
 }
+
+  
+

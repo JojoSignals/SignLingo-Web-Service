@@ -23,6 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.UserStats.Features.CommandServices;
 using Application.UserStats.Features.QueryServices;
 using Domain.UserStats.Repositories;
+using Domain.UserStats.Services;
 using Infrastructure.UserStats.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,7 +77,7 @@ builder.Services.AddScoped<IImageManagerService, ImageManagerService>();
 builder.Services.AddScoped<IUserStatsRepository, UserStatRepository>();
 builder.Services.AddScoped<UserStatCommandService>(); 
 builder.Services.AddScoped<UserStatQueryService>();
-
+builder.Services.AddScoped<IUserStatsQueryService, UserStatQueryService>();
 
 
 builder.Services.AddHttpClient();
