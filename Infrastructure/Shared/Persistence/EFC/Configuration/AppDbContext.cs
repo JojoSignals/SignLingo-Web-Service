@@ -4,6 +4,7 @@ using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MySql.EntityFrameworkCore.Extensions;
 
 namespace Infrastructure.Shared.Persistence.EFC.Configuration;
 
@@ -53,8 +54,9 @@ public class AppDbContext : DbContext
         // Exercise
         builder.Entity<Exercise>().ToTable("Exercise");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
+        // builder.Entity<Exercise>().Property(ex => ex.Id).UseMySQLAutoIncrementColumn();
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
-        builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
+        builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId);
         
         // Exercises --- Levels
         builder.Entity<Exercise>()
@@ -70,7 +72,8 @@ public class AppDbContext : DbContext
         
         //ExerciseOption
         builder.Entity<ExerciseOption>().ToTable("ExerciseOption");
-        builder.Entity<ExerciseOption>().HasKey(eo => new { eo.ExerciseId, eo.OptionId });
+        // builder.Entity<ExerciseOption>().HasKey(eo => new { eo.ExerciseId, eo.OptionId });
+        builder.Entity<ExerciseOption>().HasKey(eo => eo.Id);
         builder.Entity<ExerciseOption>().Property(eo=> eo.IsCorrect).HasDefaultValue(false);
         //ExericseOption Relations
         builder.Entity<ExerciseOption>()

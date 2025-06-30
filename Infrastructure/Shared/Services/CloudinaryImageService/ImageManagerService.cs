@@ -11,14 +11,20 @@ namespace Infrastructure.Shared.Services.CloudinaryImageService;
 public class ImageManagerService : IImageManagerService
 {
     private readonly Cloudinary _cloudinaryClient;
+<<<<<<< Updated upstream
     private string _apiKey; 
+=======
+>>>>>>> Stashed changes
 
     public ImageManagerService(IOptions<CloudinaryCredentials> options)
     {
 
         var settings = options.Value;
 
+<<<<<<< Updated upstream
         this._apiKey = settings.ApiKey;
+=======
+>>>>>>> Stashed changes
         Account account = new(settings.CloudName, settings.ApiKey, settings.ApiSecret);
         this._cloudinaryClient = new Cloudinary(account);
     }
@@ -33,8 +39,11 @@ public class ImageManagerService : IImageManagerService
 
         if (response.StatusCode == HttpStatusCode.OK)
         {
+<<<<<<< Updated upstream
             Console.WriteLine("URL IS " + response.Url.ToString());
             Console.WriteLine("API KEY " + this._apiKey);
+=======
+>>>>>>> Stashed changes
             return new ImageResponse(response.Url.ToString());
         }
 
