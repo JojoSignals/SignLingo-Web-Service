@@ -94,8 +94,8 @@ public class AppDbContext : DbContext
         //Exercise || QuestionType
         builder.Entity<Exercise>()
             .HasOne(ex => ex.QuestionType)
-            .WithOne(q => q.Exercise)
-            .HasForeignKey<Exercise>(e => e.QuestionTypeId);
+            .WithMany(q => q.Exercise)
+            .HasForeignKey(e => e.QuestionTypeId);
         
         //Unit
         builder.Entity<Unit>().ToTable("Units");

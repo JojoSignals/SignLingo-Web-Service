@@ -34,46 +34,38 @@ public class ExerciseCommandService : IExerciseCommandService
 
     public async Task<ExerciseResponse> Handle(CreateExerciseCommand command)
     {
-        var exerciseRequest = _mapper.Map<Exercise>(command);
-        var level = await _levelRepository.GetByIdAsync(command.LevelId);
-
-        if (level != null)
+        // var exerciseRequest = _mapper.Map<Exercise>(command);
+        var exercise = new Exercise
         {
-            Console.WriteLine("Level already exists");
-        }
+            QuestionWord = command.QuestionWord,
+            QuestionTypeId = command.QuestionTypeId,
+            LevelId = command.LevelId,
+            ExerciseOptions = []
+        };
 
-        exerciseRequest.LevelId = command.LevelId;
-        exerciseRequest.Level = level;
-
-        if (level.Exercises == null)
+        for (var i = 0; i < command.OptionsId.Count; i++)
         {
-            level.Exercises = [];
-        }
-        level.Exercises.Add(exerciseRequest);
-
-        foreach (var optionId in command.OptionsId)
-        {
+            var optionId = command.OptionsId.ElementAt(i);
             var option = await _optionRepository.GetByIdAsync(optionId);
-            Console.WriteLine("Option ID " + option?.Word ?? "null");
+
+            Console.WriteLine($"Index: {i}, Option ID: {option?.Word ?? "null"}");
+
             if (option == null) continue;
 
             var exerciseOption = new ExerciseOption()
             {
-                ExerciseId = exerciseRequest.Id,
+                ExerciseId = exercise.Id,
                 OptionId = option.Id,
-                IsCorrect = false,
-                Exercise = exerciseRequest,
-                Option = option
+                IsCorrect = i == 0,
             };
-            exerciseRequest.ExerciseOptions = [];
-            exerciseRequest.ExerciseOptions.Add(exerciseOption);
+
+            exercise.ExerciseOptions.Add(exerciseOption);
         }
 
-
-        await _exerciseRepository.AddAsync(exerciseRequest);
+        await _exerciseRepository.AddAsync(exercise);
         await _unitOfWork.CompleteAsync();
 
-        var exerciseResponse = _mapper.Map<ExerciseResponse>(exerciseRequest);
+        var exerciseResponse = _mapper.Map<ExerciseResponse>(exercise);
 
         return exerciseResponse;
     }
