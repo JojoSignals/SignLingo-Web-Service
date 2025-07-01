@@ -127,8 +127,8 @@ public class AppDbContext : DbContext
         //Level --- Icon
         builder.Entity<Level>()
             .HasOne(l => l.Icon)
-            .WithOne(i => i.Level)
-            .HasForeignKey<Level>(l => l.IconId);
+            .WithMany(i => i.Levels)
+            .HasForeignKey(l => l.IconId);
         
   
 

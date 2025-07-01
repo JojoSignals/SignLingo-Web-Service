@@ -7,9 +7,9 @@ using Domain.ExercisesManager.Services.IconServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources;
-using Presentation.ExercisesManager.Resources.IconResources;
+using Presentation.ExercisesManager.Resources.Icon;
 using Presentation.ExercisesManager.Transforms;
-using Presentation.ExercisesManager.Transforms.IconTransforms;
+using Presentation.ExercisesManager.Transforms.Icon;
 
 namespace Presentation.ExercisesManager.Controllers
 {
@@ -27,11 +27,12 @@ namespace Presentation.ExercisesManager.Controllers
         }
         //GET ALL Icons
         [HttpGet]
-        public async Task<IActionResult> GetIcon()
+        public async Task<IActionResult> GetAllIcons()
         {
             var query = new GetAllIconsQuery();
             var result = await _iconQueryService.Handle(query);
-            return Ok(result);
+            var resources = IconResourceFromIconResponseAssembler.ToResourcesFromResponse(result);
+            return Ok(resources);
         }
         
         //GET ICON BY ID
@@ -41,7 +42,8 @@ namespace Presentation.ExercisesManager.Controllers
             var query = new GetIconByIdQuery(id);
             var result = await _iconQueryService.Handle(query);
             if (result == null) return NotFound();
-            return Ok(result);
+            var resource = IconResourceFromIconResponseAssembler.ToResourceFromResponse(result);
+            return Ok(resource);
         }
         
         //POST ICON
@@ -53,8 +55,9 @@ namespace Presentation.ExercisesManager.Controllers
 
             var command = CreateIconCommandFromResourceAssembler.ToCommandFromResource(resource);
             var result = await _iconCommandService.Handle(command);
+            var output = IconResourceFromIconResponseAssembler.ToResourceFromResponse(result);
 
-            return StatusCode(201, result);
+            return StatusCode(201, output);
         }
         
         //PATCH ICONS WITH ID

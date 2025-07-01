@@ -1,7 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.IconCommands;
-using Presentation.ExercisesManager.Resources.IconResources;
+using Presentation.ExercisesManager.Resources.Icon;
 
-namespace Presentation.ExercisesManager.Transforms.IconTransforms;
+namespace Presentation.ExercisesManager.Transforms.Icon;
 
 public static class CreateIconCommandFromResourceAssembler
 {

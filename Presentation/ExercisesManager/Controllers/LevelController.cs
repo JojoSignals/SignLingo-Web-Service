@@ -27,7 +27,8 @@ namespace Presentation.ExercisesManager.Controllers
       {
           var query = new GetAllLevelsQuery();
           var result = await _levelQueryService.Handle(query);
-          return Ok(result);
+          var resources = LevelResourceFromLevelResponseAssembler.ToResourcesFromResponse(result);
+          return Ok(resources);
       }
       
       // GET LEVEL BY ID
@@ -37,7 +38,8 @@ namespace Presentation.ExercisesManager.Controllers
           var query = new GetLevelByIdQuery(id);
           var result = await _levelQueryService.Handle(query);
           if (result is null) return NotFound();
-          return Ok(result);
+          var resource = LevelResourceFromLevelResponseAssembler.ToResourceFromResponse(result);
+          return Ok(resource);
       }
       
       // POST LEVEL
@@ -49,8 +51,8 @@ namespace Presentation.ExercisesManager.Controllers
           var command = CreateLevelCommandFromResourceAssembler.ToCommandFromResource(resource);
           
           var result = await _levelCommandService.Handle(command);
-
-          return StatusCode(201, result);
+          var output = LevelResourceFromLevelResponseAssembler.ToResourceFromResponse(result);
+          return StatusCode(201, output);
       }
       // PATCH EXERCISE WITH ID
       [HttpPatch("patch/{id}")]
