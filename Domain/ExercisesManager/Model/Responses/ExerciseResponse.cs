@@ -7,5 +7,5 @@ public class ExerciseResponse
 {
     public string QuestionWord { get; set; }
     public QuestionType QuestionType { get; set; }
-    public Level Level { get; set; }
+    public int LevelId { get; set; }
 }

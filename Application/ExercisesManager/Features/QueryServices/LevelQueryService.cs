@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Application.ExercisesManager.Exceptions.Level;
 using Application.Shared.Exceptions;
 using AutoMapper;
@@ -25,10 +26,6 @@ public class LevelQueryService : ILevelQueryService
     public async Task<IReadOnlyCollection<LevelResponse>> Handle(GetAllLevelsQuery query)
     {
         var levels = await _levelRepository.GetAllAsync();
-        if (levels.Count == 0)
-        {
-            throw new NoEntitiesFoundException(nameof(Level));
-        }
         
         var response = _mapper.Map<IReadOnlyCollection<LevelResponse>>(levels);
         return response;

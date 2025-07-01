@@ -21,7 +21,8 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
     {
-        return await _context.Set<TEntity>().Where(t=> t.IsEnable).ToListAsync();
+        var query = IncludeNavigationProperties(_context.Set<TEntity>()).Where((t) => t.IsEnable);
+        return await query.ToListAsync();
     }
 
     public async Task<TEntity?> GetByIdAsync(int id)
@@ -41,5 +42,10 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
         entity.IsEnable = false;
         return true;
+    }
+
+    protected virtual IQueryable<TEntity> IncludeNavigationProperties(DbSet<TEntity> dbSet)
+    {
+        return dbSet;
     }
 }

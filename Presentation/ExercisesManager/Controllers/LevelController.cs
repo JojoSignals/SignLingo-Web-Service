@@ -44,21 +44,8 @@ namespace Presentation.ExercisesManager.Controllers
       [HttpPost("create-level")]
       public async Task<IActionResult> CreateLevelAsync([FromBody] CreateLevelResource resource)
       {
-          if (resource == null)
-          {
-              return StatusCode(400, "Invlid resource data");
-          }
-
-          if (string.IsNullOrEmpty(resource.LevelName))
-          {
-              return BadRequest("El nombre del nivel no puede ser nulo.");
-          }
-
-          if (string.IsNullOrEmpty(resource.LevelDescription))
-          {
-              return BadRequest("La descripcion del nivel no puede ser nulo");
-          }
-
+          if (!ModelState.IsValid) return BadRequest(ModelState);
+          
           var command = CreateLevelCommandFromResourceAssembler.ToCommandFromResource(resource);
           
           var result = await _levelCommandService.Handle(command);

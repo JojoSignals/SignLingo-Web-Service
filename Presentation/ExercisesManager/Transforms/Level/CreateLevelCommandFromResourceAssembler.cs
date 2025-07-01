@@ -10,7 +10,7 @@ public static class CreateLevelCommandFromResourceAssembler
         return new CreateLevelCommand(
             resource.LevelName,
             resource.LevelDescription,
-            resource.ExperienceRequiered,
+            resource.ExperienceRequired,
             resource.TotalQuestions,
             resource.UnitId,
             resource.IconId

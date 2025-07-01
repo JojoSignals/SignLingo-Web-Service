@@ -8,7 +8,7 @@ public class LevelResponse
     public string LevelDescription { get; set; }
     public int ExperienceRequiered { get; set; }
     public int TotalQuestions { get; set; }
-    public Unit Unit { get; set; }
-    public Icon Icon { get; set; }
+    public UnitResponse Unit { get; set; }
+    public IconResponse Icon { get; set; }
     
 }
