@@ -14,6 +14,6 @@ public class LevelRepository : BaseRepository<Level>, ILevelRepository
     
     protected override IQueryable<Level> IncludeNavigationProperties(DbSet<Level> dbSet)
     {
-        return dbSet.Include(l => l.Unit).Include(l => l.Icon);
+        return dbSet.Include(l => l.Unit).Include(l => l.Icon).Include(l => l.Exercises);
     }
 }

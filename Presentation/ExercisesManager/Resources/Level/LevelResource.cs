@@ -1,3 +1,4 @@
+using Presentation.ExercisesManager.Resources.Exercise;
 using Presentation.ExercisesManager.Resources.Icon;
 using Presentation.ExercisesManager.Resources.Unit;
 
@@ -9,5 +10,6 @@ public record LevelResource(
     int ExperienceRequired,
     int TotalQuestions,
     UnitResource Unit,
-    IconResource Icon
+    IconResource Icon,
+    IReadOnlyCollection<ExerciseResource> Exercises
 );

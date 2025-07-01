@@ -27,7 +27,8 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public async Task<TEntity?> GetByIdAsync(int id)
     {
-        return await _context.Set<TEntity>().Where(t => t.IsEnable && t.Id == id).FirstOrDefaultAsync();
+        var query = IncludeNavigationProperties(_context.Set<TEntity>()).Where(t => t.Id == id && t.IsEnable);
+        return await query.FirstOrDefaultAsync();
     }
     
     public async Task UpdateAsync(TEntity entity)

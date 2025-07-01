@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Entities;
 
 namespace Domain.ExercisesManager.Model.Responses;
@@ -11,5 +12,8 @@ public class LevelResponse
     public int TotalQuestions { get; set; }
     public UnitResponse Unit { get; set; }
     public IconResponse Icon { get; set; }
+    
+    
+    public IReadOnlyCollection<LevelExerciseResponse> LevelExercises { get; set; }
     
 }
