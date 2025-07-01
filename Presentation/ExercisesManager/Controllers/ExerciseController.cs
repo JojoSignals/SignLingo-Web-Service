@@ -1,6 +1,8 @@
 using Domain.ExercisesManager.Model.Commands.Exercise;
 using Domain.ExercisesManager.Model.Queries.Exercise;
+using Domain.ExercisesManager.Model.Queries.ExerciseOption;
 using Domain.ExercisesManager.Services.Exercise;
+using Domain.ExercisesManager.Services.ExerciseOption;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Exercise;
@@ -15,13 +17,16 @@ namespace Presentation.ExercisesManager.Controllers
         
         private readonly IExerciseQueryService _exerciseQueryService;
         private readonly IExerciseCommandService _exerciseCommandService;
+        private readonly IExerciseOptionQueryService _exerciseOptionQueryService;
 
 
         public ExerciseController(IExerciseQueryService exerciseQueryService,
-            IExerciseCommandService exerciseCommandService)
+            IExerciseCommandService exerciseCommandService,
+            IExerciseOptionQueryService exerciseOptionQueryService)
         {
             _exerciseQueryService = exerciseQueryService;
             _exerciseCommandService = exerciseCommandService;
+            _exerciseOptionQueryService = exerciseOptionQueryService;
         }
         
         // GET: api/<ExerciseController>
@@ -40,10 +45,11 @@ namespace Presentation.ExercisesManager.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetExerciseByIdAsync(int id)
         {
-            var query = new GetExerciseByIdQuery(id);
-            var result = await _exerciseQueryService.Handle(query);
+            var query = new GetExerciseOptionsByExerciseId(id);
+            var result = await _exerciseOptionQueryService.Handle(query);
+            var output = ExerciseResourceFromExerciseOptionDomainAssembler.ToResourceFromDomain(result);
             
-            return Ok(result);
+            return Ok(output);
         }
        
         //GET EXERCISE BY QuestionTypeID

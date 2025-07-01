@@ -1,6 +1,6 @@
 namespace Presentation.ExercisesManager.Resources.Exercise;
 
 public record ExerciseResource(
-    int Id,
-    string QuestionWord
+    int ExerciseId,
+    List<ExerciseOptionResource> ExerciseOptions
     );

@@ -28,6 +28,7 @@ public class AppDbContext : DbContext
     public DbSet<Icon> Icons { get; set; }
     public DbSet<Option> Options { get; set; }
     public DbSet<Level> Levels { get; set; }
+    public DbSet<ExerciseOption> ExerciseOptions { get; set; }
     
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
     
