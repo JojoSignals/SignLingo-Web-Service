@@ -41,6 +41,15 @@ public class UserStatController : ControllerBase
         if (stat is null) return NotFound();
         return Ok(UserStatResourceAssembler.ToResource(stat));
     }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserStatResource>>> GetAll()
+    {
+        var query = new GetAllUserStatsQuery();
+        var stats = await _queryService.Handle(query);
+
+        var resources = stats.Select(UserStatResourceAssembler.ToResource);
+        return Ok(resources);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserStatResource resource)

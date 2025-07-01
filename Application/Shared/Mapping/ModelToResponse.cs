@@ -10,6 +10,8 @@ using Domain.ExercisesManager.Model.Responses;
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Entities;
 using Domain.Security.Model.Responses;
+using Domain.UserStats.Model.Agreggates;
+using Domain.UserStats.Model.Responses;
 
 namespace Application.Shared.Mapping;
 
@@ -47,6 +49,7 @@ public class ModelToResponse : Profile
         CreateMap<EditLevelCommand, LevelResponse>();
         CreateMap<CreateLevelCommand, LevelResponse>();
         CreateMap<DeleteLevelCommand, LevelResponse>();
-
+        //User Stats
+        CreateMap<UserStat, UserStatsResponse>();
     }
 }
