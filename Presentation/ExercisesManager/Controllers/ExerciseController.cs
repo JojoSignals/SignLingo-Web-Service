@@ -5,6 +5,7 @@ using Domain.ExercisesManager.Services.Exercise;
 using Domain.ExercisesManager.Services.ExerciseOption;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Presentation.ExercisesManager.Resources.Exercise;
 using Presentation.ExercisesManager.Transforms.Exercise;
 

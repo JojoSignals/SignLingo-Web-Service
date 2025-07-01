@@ -15,7 +15,15 @@ public class ExerciseOptionRepository : BaseRepository<ExerciseOption>, IExercis
     public async Task<IReadOnlyCollection<ExerciseOption>> GetExerciseOptionsByExerciseIdAsync(int exerciseId)
     {
         return await _context.ExerciseOptions
+            .Include(x => x.Exercise)
+            .Include(x => x.Option)
             .Where(x => x.ExerciseId == exerciseId)
             .ToListAsync();
+    }
+
+
+    protected override IQueryable<ExerciseOption> IncludeNavigationProperties(DbSet<ExerciseOption> dbSet)
+    {
+        return dbSet.Include(x => x.Exercise).Include(x => x.Option);
     }
 }
