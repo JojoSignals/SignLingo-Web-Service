@@ -12,7 +12,6 @@
       <Folder Include="Notification\" />
       <Folder Include="Ranking\" />
       <Folder Include="Security\Model\Entities\" />
-      <Folder Include="Shared\Model\" />
       <Folder Include="Transaction\" />
       <Folder Include="UserStats\" />
     </ItemGroup>

@@ -13,10 +13,12 @@ using Domain.ExercisesManager.Services.Unit;
 using Domain.Security.Repositories;
 using Domain.Security.Services;
 using Domain.Shared.Repository;
+using Domain.Shared.Services;
 using Infrastructure.ExercisesManager.Persistence;
 using Infrastructure.Security.Persistence;
 using Infrastructure.Shared.Persistence.EFC.Configuration;
 using Infrastructure.Shared.Persistence.EFC.Repositories;
+using Infrastructure.Shared.Services.CloudinaryImageService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,10 +63,16 @@ builder.Services.AddScoped<IOptionRepository, OptionRepository>();
 builder.Services.AddScoped<IOptionQueryService, OptionQueryService>();
 builder.Services.AddScoped<IOptionCommandService, OptionCommandService>();
 
+// DI Shared 
+builder.Services.Configure<CloudinaryCredentials>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<IImageManagerService, ImageManagerService>();
+
+
 builder.Services.AddHttpClient();
 
 //Conexion a MySQL 
-var connectionString = builder.Configuration.GetConnectionString("signLingoCenterConnection");
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ??
+                       builder.Configuration.GetConnectionString("signLingoCenterConnection");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowTests", policy =>
@@ -73,20 +81,34 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<AppDbContext>(
-    options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    if (connectionString != null)
     {
-        if (connectionString != null)
-            if (builder.Environment.IsDevelopment())
-                options.UseMySQL(connectionString)
-                    .LogTo(Console.WriteLine, LogLevel.Information)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors();
-            else if (builder.Environment.IsProduction())
-                options.UseMySQL(connectionString)
-                    .LogTo(Console.WriteLine, LogLevel.Error)
-                    .EnableDetailedErrors();
-    });
+        options.UseMySQL(connectionString, mysqlOptions =>
+        {
+            mysqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorNumbersToAdd: null);
+        });
+
+        if (builder.Environment.IsDevelopment())
+        {
+            options
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
+        }
+        else if (builder.Environment.IsProduction())
+        {
+            options
+                .LogTo(Console.WriteLine, LogLevel.Error)
+                .EnableDetailedErrors();
+        }
+    }
+});
+
 var app = builder.Build();
 app.UseCors("AllowTests");
 //DB-Ensure Creation
