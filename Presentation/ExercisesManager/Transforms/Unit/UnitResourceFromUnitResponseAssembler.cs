@@ -1,7 +1,7 @@
 using Domain.ExercisesManager.Model.Responses;
 using Presentation.ExercisesManager.Resources.Unit;
 
-namespace Presentation.ExercisesManager.Transforms.Level;
+namespace Presentation.ExercisesManager.Transforms.Unit;
 
 public static class UnitResourceFromUnitResponseAssembler
 {

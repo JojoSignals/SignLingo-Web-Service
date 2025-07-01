@@ -4,6 +4,7 @@ using Domain.ExercisesManager.Model.Queries;
 using Domain.ExercisesManager.Model.Queries.IconQueries;
 using Domain.ExercisesManager.Services;
 using Domain.ExercisesManager.Services.IconServices;
+using Domain.Shared.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources;
@@ -20,7 +21,7 @@ namespace Presentation.ExercisesManager.Controllers
         private readonly IIconCommandService _iconCommandService;
         private readonly IIconQueryService _iconQueryService;
 
-        public IconController(IIconCommandService iconCommandService, IIconQueryService iconQueryService)
+        public IconController(IIconCommandService iconCommandService, IIconQueryService iconQueryService, IImageManagerService imageManagerService)
         {
             _iconCommandService = iconCommandService;
             _iconQueryService = iconQueryService;
@@ -48,10 +49,10 @@ namespace Presentation.ExercisesManager.Controllers
         
         //POST ICON
         [HttpPost("create-icon")]
-        public async Task<IActionResult> CreateIconAsync([FromBody] CreateIconResource resource)
+        public async Task<IActionResult> CreateIconAsync([FromForm] CreateIconResource resource)
         {
             if (resource == null) return BadRequest("Invalid resource data");
-            if (string.IsNullOrEmpty(resource.UrlImage)) return BadRequest("EL campo 'urlimage' es obligatorio");
+            // if (string.IsNullOrEmpty(resource.UrlImage)) return BadRequest("EL campo 'urlimage' es obligatorio");
 
             var command = CreateIconCommandFromResourceAssembler.ToCommandFromResource(resource);
             var result = await _iconCommandService.Handle(command);

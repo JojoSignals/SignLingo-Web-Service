@@ -3,7 +3,6 @@ using Domain.ExercisesManager.Model.Queries.Unit;
 using Domain.ExercisesManager.Services.Unit;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Unit;
-using Presentation.ExercisesManager.Transforms.Level;
 using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers

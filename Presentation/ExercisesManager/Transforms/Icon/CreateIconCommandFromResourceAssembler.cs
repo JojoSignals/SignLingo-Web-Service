@@ -7,6 +7,6 @@ public static class CreateIconCommandFromResourceAssembler
 {
     public static CreateIconCommand ToCommandFromResource(CreateIconResource resource)
     {
-        return new CreateIconCommand(resource.UrlImage);
+        return new CreateIconCommand(resource.Image.OpenReadStream());
     }
 }

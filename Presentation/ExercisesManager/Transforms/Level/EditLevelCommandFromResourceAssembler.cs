@@ -1,7 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.Level;
 using Presentation.ExercisesManager.Resources.Level;
 
-namespace Presentation.ExercisesManager.Transforms.Level;
+namespace Presentation.ExercisesManager.Transforms.Unit;
 
 public static class EditLevelCommandFromResourceAssembler
 {

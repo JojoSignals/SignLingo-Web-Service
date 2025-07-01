@@ -3,7 +3,7 @@ using Presentation.ExercisesManager.Resources.Icon;
 using Presentation.ExercisesManager.Resources.Level;
 using Presentation.ExercisesManager.Resources.Unit;
 
-namespace Presentation.ExercisesManager.Transforms.Level;
+namespace Presentation.ExercisesManager.Transforms.Unit;
 
 public static class LevelResourceFromLevelResponseAssembler
 {
