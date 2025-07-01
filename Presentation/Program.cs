@@ -6,6 +6,7 @@ using Application.Security.Features.QueryServices;
 using Application.Shared.Mapping;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services.Exercise;
+using Domain.ExercisesManager.Services.ExerciseOption;
 using Domain.ExercisesManager.Services.IconServices;
 using Domain.ExercisesManager.Services.Level;
 using Domain.ExercisesManager.Services.Option;
@@ -51,6 +52,10 @@ builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
 builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
 //QuestionType
 builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
+// ExerciseOptions
+builder.Services.AddScoped<IExerciseOptionRepository, ExerciseOptionRepository>();
+builder.Services.AddScoped<IExerciseOptionQueryService, ExerciseOptionQueryService>();
+
 //Unit
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUnitQueryService, UnitQueryService>();

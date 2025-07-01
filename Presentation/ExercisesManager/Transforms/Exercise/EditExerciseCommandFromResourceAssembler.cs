@@ -9,6 +9,7 @@ public static class EditExerciseCommandFromResourceAssembler
         new EditExerciseCommand(
             id,
             resource.QuestionWord,
-            resource.QuestionTypeId
+            resource.QuestionTypeId,
+            resource.LevelId
         );
 }

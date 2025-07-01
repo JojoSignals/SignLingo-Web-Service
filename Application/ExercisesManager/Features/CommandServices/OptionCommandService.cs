@@ -1,3 +1,4 @@
+using System.Globalization;
 using Application.ExercisesManager.Exceptions.Option;
 using AutoMapper;
 using Domain.ExercisesManager.Model.Commands.Option;
@@ -6,6 +7,7 @@ using Domain.ExercisesManager.Model.Responses;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services.Option;
 using Domain.Shared.Repository;
+using Domain.Shared.Services;
 
 namespace Application.ExercisesManager.Features.CommandServices;
 
@@ -14,23 +16,37 @@ public class OptionCommandService : IOptionCommandService
     private readonly IOptionRepository _optionRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IImageManagerService _imageManagerService;
 
-    public OptionCommandService(IOptionRepository optionRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    public OptionCommandService(IOptionRepository optionRepository, IMapper mapper, IUnitOfWork unitOfWork, IImageManagerService imageManagerService)
     {
         _optionRepository = optionRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _imageManagerService = imageManagerService;
     }
 
 
     public async Task<OptionResponse> Handle(CreateOptionCommand command)
     {
-        var optionRequest = _mapper.Map<Option>(command);
+        //var optionRequest = _mapper.Map<Option>(command);
 
-        await _optionRepository.AddAsync(optionRequest);
+        var imageResponse =
+            await _imageManagerService.UploadAsync(new DateTime().ToString(CultureInfo.InvariantCulture),
+                command.Image);
+        
+        var imageUrl = imageResponse.Url;
+
+        var option = new Option()
+        {
+            Word = command.Word,
+            UrlImage = imageResponse.Url,
+        };
+        
+        await _optionRepository.AddAsync(option);
         await _unitOfWork.CompleteAsync();
         
-        var optionResponse = _mapper.Map<OptionResponse>(optionRequest);
+        var optionResponse = _mapper.Map<OptionResponse>(option);
         
         return optionResponse;
     }

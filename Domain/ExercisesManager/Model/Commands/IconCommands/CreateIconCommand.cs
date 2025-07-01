@@ -1,3 +1,3 @@
 namespace Domain.ExercisesManager.Model.Commands.IconCommands;
 
-public record CreateIconCommand (string UrlImage);
+public record CreateIconCommand(Stream Image);

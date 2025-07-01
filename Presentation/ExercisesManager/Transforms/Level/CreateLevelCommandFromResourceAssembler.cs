@@ -1,7 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.Level;
 using Presentation.ExercisesManager.Resources.Level;
 
-namespace Presentation.ExercisesManager.Transforms.Level;
+namespace Presentation.ExercisesManager.Transforms.Unit;
 
 public static class CreateLevelCommandFromResourceAssembler
 {
@@ -10,7 +10,7 @@ public static class CreateLevelCommandFromResourceAssembler
         return new CreateLevelCommand(
             resource.LevelName,
             resource.LevelDescription,
-            resource.ExperienceRequiered,
+            resource.ExperienceRequired,
             resource.TotalQuestions,
             resource.UnitId,
             resource.IconId

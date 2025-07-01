@@ -8,5 +8,5 @@ public class QuestionTypeEntity : BaseModel
 {
     public QuestionType Qtype { get; set; }
     
-    public Exercise Exercise { get; set; }
+    public List<Exercise> Exercise { get; set; }
 }

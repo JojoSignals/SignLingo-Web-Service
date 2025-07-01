@@ -29,10 +29,10 @@ public class ExerciseQueryService : IExerciseQueryService
     public async Task<IReadOnlyCollection<ExerciseResponse>> Handle(GetAllExercisesQuery query)
     {
         var exercises = await _exerciseRepository.GetAllAsync();
-        if (exercises.Count == 0)
-        {
-            throw new NoEntitiesFoundException(nameof(Exercise));
-        }
+        // if (exercises.Count == 0)
+        // {
+        //     throw new NoEntitiesFoundException(nameof(Exercise));
+        // }
         
         var response = _mapper.Map<IReadOnlyCollection<ExerciseResponse>>(exercises);
         return response;

@@ -7,5 +7,5 @@ public class Icon : BaseModel
 {
     public string UrlImage { get; set; }
     
-    public Level Level { get; set; }
+    public List<Level> Levels { get; set; }
 }

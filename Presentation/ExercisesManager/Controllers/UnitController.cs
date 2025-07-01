@@ -24,8 +24,9 @@ namespace Presentation.ExercisesManager.Controllers
         public async Task<IActionResult> GetAllUnitsAsync()
         {
             var query = new GetAllUnitsQuery();
-            var result = await _unitQueryService.Handle(query);
-            return Ok(result);
+            var responseList = await _unitQueryService.Handle(query);
+            var resources = UnitResourceFromUnitResponseAssembler.ToResourcesFromResponses(responseList);
+            return Ok(resources);
         }
         
        
@@ -36,29 +37,22 @@ namespace Presentation.ExercisesManager.Controllers
             var query = new GetUnitByIdQuery(id);
             var result = await _unitQueryService.Handle(query);
             if (result is null) return NotFound();
-            return Ok(result);
+            var resource = UnitResourceFromUnitResponseAssembler.ToResourceFromResponse(result);
+            return Ok(resource);
         }
         
         //POST EXERCISE
         [HttpPost("create-unit")]
         public async Task<IActionResult> CreateUnitAsync([FromBody] CreateUnitResource resource)
         {
-            if (resource == null)
-            {
-                return BadRequest("El nombre no puede ser nulo.");
-            }
-
-            if (string.IsNullOrEmpty(resource.Name))
-            {
-                return BadRequest("El campo 'Name' es obligatorio.");
-            }
-
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
             var command = CreateUnitCommandFromResourceAssembler.ToCommandFromResource(resource);
             
             var result = await _unitCommandService.Handle(command);
+            var output = UnitResourceFromUnitResponseAssembler.ToResourceFromResponse(result);
 
-            return StatusCode(201, result);
-
+            return StatusCode(201, output);
         }
         
         // PATCH Exercise with Id

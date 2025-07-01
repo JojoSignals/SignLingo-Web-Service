@@ -5,7 +5,7 @@ using Domain.Security.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Domain.UserStats.Model.Agreggates;
-
+using MySql.EntityFrameworkCore.Extensions;
 namespace Infrastructure.Shared.Persistence.EFC.Configuration;
 
 public class AppDbContext : DbContext
@@ -29,6 +29,9 @@ public class AppDbContext : DbContext
     public DbSet<Option> Options { get; set; }
     public DbSet<Level> Levels { get; set; }
     public DbSet<UserStat> UserStats { get; set; }
+    
+    public DbSet<ExerciseOption> ExerciseOptions { get; set; }
+    
 
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
     
@@ -55,8 +58,9 @@ public class AppDbContext : DbContext
         // Exercise
         builder.Entity<Exercise>().ToTable("Exercise");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
+        // builder.Entity<Exercise>().Property(ex => ex.Id).UseMySQLAutoIncrementColumn();
         builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
-        builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId).IsUnique();
+        builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId);
         
         // Exercises --- Levels
         builder.Entity<Exercise>()
@@ -72,7 +76,8 @@ public class AppDbContext : DbContext
         
         //ExerciseOption
         builder.Entity<ExerciseOption>().ToTable("ExerciseOption");
-        builder.Entity<ExerciseOption>().HasKey(eo => new { eo.ExerciseId, eo.OptionId });
+        // builder.Entity<ExerciseOption>().HasKey(eo => new { eo.ExerciseId, eo.OptionId });
+        builder.Entity<ExerciseOption>().HasKey(eo => eo.Id);
         builder.Entity<ExerciseOption>().Property(eo=> eo.IsCorrect).HasDefaultValue(false);
         //ExericseOption Relations
         builder.Entity<ExerciseOption>()
@@ -93,8 +98,8 @@ public class AppDbContext : DbContext
         //Exercise || QuestionType
         builder.Entity<Exercise>()
             .HasOne(ex => ex.QuestionType)
-            .WithOne(q => q.Exercise)
-            .HasForeignKey<Exercise>(e => e.QuestionTypeId);
+            .WithMany(q => q.Exercise)
+            .HasForeignKey(e => e.QuestionTypeId);
         
         //Unit
         builder.Entity<Unit>().ToTable("Units");
@@ -126,8 +131,8 @@ public class AppDbContext : DbContext
         //Level --- Icon
         builder.Entity<Level>()
             .HasOne(l => l.Icon)
-            .WithOne(i => i.Level)
-            .HasForeignKey<Level>(l => l.IconId);
+            .WithMany(i => i.Levels)
+            .HasForeignKey(l => l.IconId);
         
   
         //UserStats

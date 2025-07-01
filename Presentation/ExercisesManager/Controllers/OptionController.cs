@@ -42,7 +42,7 @@ namespace Presentation.ExercisesManager.Controllers
         
         //POST OPTION
         [HttpPost("create-option")]
-        public async Task<IActionResult> CreateIconAsync([FromBody] CreateOptionResource resource)
+        public async Task<IActionResult> CreateIconAsync([FromForm] CreateOptionResource resource)
         {
             if (resource == null) return BadRequest();
             if (string.IsNullOrEmpty(resource.Word)) return BadRequest("El campo de 'Word' es Obligatorio");

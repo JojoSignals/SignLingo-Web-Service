@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Level;
 using Presentation.ExercisesManager.Transforms.Level;
+using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers
 {
@@ -27,7 +28,8 @@ namespace Presentation.ExercisesManager.Controllers
       {
           var query = new GetAllLevelsQuery();
           var result = await _levelQueryService.Handle(query);
-          return Ok(result);
+          var resources = LevelResourceFromLevelResponseAssembler.ToResourcesFromResponse(result);
+          return Ok(resources);
       }
       
       // GET LEVEL BY ID
@@ -37,33 +39,21 @@ namespace Presentation.ExercisesManager.Controllers
           var query = new GetLevelByIdQuery(id);
           var result = await _levelQueryService.Handle(query);
           if (result is null) return NotFound();
-          return Ok(result);
+          var resource = LevelResourceFromLevelResponseAssembler.ToResourceFromResponse(result);
+          return Ok(resource);
       }
       
       // POST LEVEL
       [HttpPost("create-level")]
       public async Task<IActionResult> CreateLevelAsync([FromBody] CreateLevelResource resource)
       {
-          if (resource == null)
-          {
-              return StatusCode(400, "Invlid resource data");
-          }
-
-          if (string.IsNullOrEmpty(resource.LevelName))
-          {
-              return BadRequest("El nombre del nivel no puede ser nulo.");
-          }
-
-          if (string.IsNullOrEmpty(resource.LevelDescription))
-          {
-              return BadRequest("La descripcion del nivel no puede ser nulo");
-          }
-
+          if (!ModelState.IsValid) return BadRequest(ModelState);
+          
           var command = CreateLevelCommandFromResourceAssembler.ToCommandFromResource(resource);
           
           var result = await _levelCommandService.Handle(command);
-
-          return StatusCode(201, result);
+          var output = LevelResourceFromLevelResponseAssembler.ToResourceFromResponse(result);
+          return StatusCode(201, output);
       }
       // PATCH EXERCISE WITH ID
       [HttpPatch("patch/{id}")]

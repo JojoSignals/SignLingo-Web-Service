@@ -23,14 +23,19 @@ public class ModelToResponse : Profile
         CreateMap<UpdateUserCommand, UserResponse>();
         CreateMap<SignUpCommand, UserResponse>();
         CreateMap<SignInCommand, UserResponse>();
-        
+
         CreateMap<Option, OptionResponse>();
         CreateMap<CreateOptionCommand, OptionResponse>();
         CreateMap<EditOptionCommand, OptionResponse>();
         CreateMap<DeleteOptionCommand, OptionResponse>();
-        
+
         // Exercises Manager
-        CreateMap<Exercise, ExerciseResponse>();
+        CreateMap<Exercise, ExerciseResponse>()
+            .ForMember(
+                dest => dest.QuestionType,
+                opt => opt.MapFrom(src => src.QuestionType)
+            )
+            ;
         CreateMap<EditExerciseCommand, ExerciseResponse>();
         CreateMap<CreateExerciseCommand, ExerciseResponse>();
         CreateMap<DeleteExerciseCommand, ExerciseResponse>();
@@ -39,17 +44,22 @@ public class ModelToResponse : Profile
         CreateMap<EditUnitCommand, UnitResponse>();
         CreateMap<CreateUnitCommand, UnitResponse>();
         CreateMap<DeleteUnitCommand, UnitResponse>();
-        
+
         CreateMap<Icon, IconResponse>();
         CreateMap<EditIconCommand, IconResponse>();
         CreateMap<CreateIconCommand, IconResponse>();
         CreateMap<DeleteIconCommand, IconResponse>();
+
+        CreateMap<Level, LevelResponse>()
+            .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Unit))
+            .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.Icon));
         
-        CreateMap<Level, LevelResponse>();
         CreateMap<EditLevelCommand, LevelResponse>();
         CreateMap<CreateLevelCommand, LevelResponse>();
         CreateMap<DeleteLevelCommand, LevelResponse>();
+
         //User Stats
         CreateMap<UserStat, UserStatsResponse>();
+
     }
 }
