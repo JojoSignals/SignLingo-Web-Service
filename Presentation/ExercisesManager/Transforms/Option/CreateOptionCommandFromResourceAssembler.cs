@@ -9,7 +9,7 @@ public static class CreateOptionCommandFromResourceAssembler
     {
         return new CreateOptionCommand(
             resource.Word,
-            resource.UrlImage
+            resource.Image.OpenReadStream()
         );
     }
 }
