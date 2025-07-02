@@ -14,7 +14,8 @@ using Presentation.ExercisesManager.Transforms.Icon;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/[controller]")]
+    // [Route("api/v1/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class IconController : ControllerBase
     {

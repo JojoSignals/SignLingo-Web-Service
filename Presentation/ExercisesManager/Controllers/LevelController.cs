@@ -9,7 +9,7 @@ using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class LevelController : ControllerBase
     {

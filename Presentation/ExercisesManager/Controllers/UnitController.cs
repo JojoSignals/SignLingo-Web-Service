@@ -7,7 +7,7 @@ using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/v1/units")]
+    [Route("[controller]")]
     [ApiController]
     public class UnitController : ControllerBase
     {

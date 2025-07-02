@@ -6,7 +6,7 @@ using Presentation.Security.Transform;
 
 namespace Presentation.Security.Controllers
 {
-    [Route("api/v1/authentication")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {

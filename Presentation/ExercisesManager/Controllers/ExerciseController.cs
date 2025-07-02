@@ -11,7 +11,7 @@ using Presentation.ExercisesManager.Transforms.Exercise;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/v1/exercises")]
+    [Route("[controller]")]
     [ApiController]
     public class ExerciseController : ControllerBase
     {

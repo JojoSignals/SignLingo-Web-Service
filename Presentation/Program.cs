@@ -21,16 +21,23 @@ using Infrastructure.Shared.Persistence.EFC.Configuration;
 using Infrastructure.Shared.Persistence.EFC.Repositories;
 using Infrastructure.Shared.Services.CloudinaryImageService;
 using Microsoft.EntityFrameworkCore;
+using Presentation.Shared.ASP.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddControllers(options =>
+{
+    
+    options.Conventions.Add(new KebabCaseRouteNamingConvention());
+    options.Conventions.Add(new PrefixVersioningNamingConvention("api/v1"));
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(RequestToModel),
-    typeof(ModelToResponse)); 
+    typeof(ModelToResponse));
 //Dependency Injection Native
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
@@ -80,10 +87,7 @@ var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__De
                        builder.Configuration.GetConnectionString("signLingoCenterConnection");
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowTests", policy =>
-    {
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-    });
+    options.AddPolicy("AllowTests", policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -115,6 +119,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 var app = builder.Build();
+
 app.UseCors("AllowTests");
 //DB-Ensure Creation
 EnsureDatabaseCreation(app);
@@ -134,15 +139,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+return;
 
 // Method to handle database creation
-void EnsureDatabaseCreation(WebApplication app)
+void EnsureDatabaseCreation(WebApplication appArgs)
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        context.Database.EnsureCreated();
-        Console.WriteLine("AQUI ESTA ENSURE DATA BASE");
-        AppDbContextSeed.LoadQuestionType(context);
-    }
+    var scope = appArgs.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+    AppDbContextSeed.LoadQuestionType(context);
 }

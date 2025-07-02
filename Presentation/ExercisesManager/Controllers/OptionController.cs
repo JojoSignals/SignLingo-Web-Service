@@ -8,7 +8,7 @@ using Presentation.ExercisesManager.Transforms.Option;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OptionController : ControllerBase
     {
