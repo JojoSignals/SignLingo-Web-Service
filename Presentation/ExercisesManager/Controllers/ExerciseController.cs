@@ -65,7 +65,7 @@ namespace Presentation.ExercisesManager.Controllers
         
         // DIEGOOOOOOOOOOOOOOO
         // POST api/<ExerciseController>
-        [HttpPost("create-exercise")]
+        [HttpPost]
         public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseResource resource)
         {
             var command = CreateExerciseCommandFromResourceAssembler
@@ -77,7 +77,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
 
         // PATCH api/<ExerciseController>/5
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditExerciseAsync(int id, [FromBody] EditExerciseResource resource)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");

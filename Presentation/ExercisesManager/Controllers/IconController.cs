@@ -49,7 +49,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST ICON
-        [HttpPost("create-icon")]
+        [HttpPost]
         public async Task<IActionResult> CreateIconAsync([FromForm] CreateIconResource resource)
         {
             if (resource == null) return BadRequest("Invalid resource data");
@@ -63,7 +63,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //PATCH ICONS WITH ID
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditIconAsync(int id, [FromBody] EditIconResource questionWord)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");

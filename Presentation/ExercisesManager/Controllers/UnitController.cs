@@ -42,7 +42,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST EXERCISE
-        [HttpPost("create-unit")]
+        [HttpPost]
         public async Task<IActionResult> CreateUnitAsync([FromBody] CreateUnitResource resource)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -56,7 +56,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         // PATCH Exercise with Id
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditUnitAsync(int id, [FromBody] EditUnitResource resource)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");

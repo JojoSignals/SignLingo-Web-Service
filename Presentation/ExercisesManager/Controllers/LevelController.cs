@@ -44,7 +44,7 @@ namespace Presentation.ExercisesManager.Controllers
       }
       
       // POST LEVEL
-      [HttpPost("create-level")]
+      [HttpPost]
       public async Task<IActionResult> CreateLevelAsync([FromBody] CreateLevelResource resource)
       {
           if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -56,7 +56,7 @@ namespace Presentation.ExercisesManager.Controllers
           return StatusCode(201, output);
       }
       // PATCH EXERCISE WITH ID
-      [HttpPatch("patch/{id}")]
+      [HttpPatch("{id}")]
       public async Task<IActionResult> EditLevelAsync(int id, [FromBody] EditLevelResource resource)
       {
           if(!ModelState.IsValid) return StatusCode(400, "Invlid resource data");

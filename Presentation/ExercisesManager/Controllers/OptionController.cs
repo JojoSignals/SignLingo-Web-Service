@@ -41,7 +41,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST OPTION
-        [HttpPost("create-option")]
+        [HttpPost]
         public async Task<IActionResult> CreateIconAsync([FromForm] CreateOptionResource resource)
         {
             if (resource == null) return BadRequest();
@@ -54,7 +54,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //PATCH OPTION WITH ID
-        [HttpPatch("update-option/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditOptionAsync(int id, [FromBody] EditOptionResource resource)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");
@@ -67,7 +67,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //DELETE OPTION
-        [HttpDelete("delete-option/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOptionAsync(int id)
         {
             var command = new DeleteOptionCommand(id);
