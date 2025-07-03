@@ -28,7 +28,7 @@ public static class LevelResourceFromLevelResponseAssembler
             response.ExperienceRequired,
             response.TotalQuestions,
             new UnitResource(response.Unit.Id, response.Unit.Name),
-            new IconResource(response.Icon.UrlImage),
+            new IconResource(response.Icon.Id, response.Icon.UrlImage),
             exerciseResources
         );
     }

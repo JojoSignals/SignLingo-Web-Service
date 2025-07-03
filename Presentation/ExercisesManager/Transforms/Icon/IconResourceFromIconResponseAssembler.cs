@@ -7,7 +7,7 @@ public static class IconResourceFromIconResponseAssembler
 {
     public static IconResource ToResourceFromResponse(IconResponse response)
     {
-        return new IconResource(response.UrlImage);
+        return new IconResource(response.Id, response.UrlImage);
     }
     
     public static ICollection<IconResource> ToResourcesFromResponse(IReadOnlyCollection<IconResponse> responses)
