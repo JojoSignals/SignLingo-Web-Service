@@ -1,8 +1,4 @@
-using System.Text.Json;
-using Application.ExercisesManager.Exceptions.Level;
-using Application.Shared.Exceptions;
 using AutoMapper;
-using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Queries.Level;
 using Domain.ExercisesManager.Model.Responses;
 using Domain.ExercisesManager.Repositories;
@@ -21,6 +17,8 @@ public class LevelQueryService(ILevelRepository levelRepository, IMapper mapper,
     public async Task<IReadOnlyCollection<LevelResponse>> Handle(GetAllLevelsQuery query)
     {
         var levels = await _levelRepository.GetAllAsync();
+
+        Console.WriteLine("Levels " + levels);
 
         var response = _mapper.Map<IReadOnlyCollection<LevelResponse>>(levels);
         return response;

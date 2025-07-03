@@ -27,8 +27,8 @@ namespace Presentation.ExercisesManager.Controllers
       public async Task<IActionResult> GetAllLevelsAsync()
       {
           var query = new GetAllLevelsQuery();
-          var result = await _levelQueryService.Handle(query);
-          var resources = LevelResourceFromLevelResponseAssembler.ToResourcesFromResponse(result);
+          var responses = await _levelQueryService.Handle(query);
+          var resources = LevelResourceFromLevelResponseAssembler.ToResourcesFromResponse(responses);
           return Ok(resources);
       }
       

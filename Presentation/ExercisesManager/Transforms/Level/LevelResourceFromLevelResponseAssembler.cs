@@ -5,6 +5,8 @@ using Presentation.ExercisesManager.Resources.Icon;
 using Presentation.ExercisesManager.Resources.Level;
 using Presentation.ExercisesManager.Resources.Unit;
 using Presentation.ExercisesManager.Transforms.Exercise;
+using Presentation.ExercisesManager.Transforms.Icon;
+using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Transforms.Level;
 
@@ -18,8 +20,8 @@ public static class LevelResourceFromLevelResponseAssembler
             response.Name,
             response.ExperienceRequired,
             response.Exercises.Count,
-            null,
-            null,
+            UnitResourceFromUnitResponseAssembler.ToResourceFromResponse(response.Unit),
+            IconResourceFromIconResponseAssembler.ToResourceFromResponse(response.Icon),
             exercicesResources
             );
         //var exerciseResources = response.Exercises.Select(l =>
