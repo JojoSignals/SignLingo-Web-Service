@@ -7,7 +7,7 @@ public static class UnitResourceFromUnitResponseAssembler
 {
     public static UnitResource ToResourceFromResponse(UnitResponse response)
     {
-        return new UnitResource(response.Name);
+        return new UnitResource(response.Id, response.Name);
     }
 
     public static ICollection<UnitResource> ToResourcesFromResponses(IReadOnlyCollection<UnitResponse> responses)
