@@ -1,5 +1,6 @@
 using Domain.ExercisesManager.Model.Aggregates;
 using Presentation.ExercisesManager.Resources.Exercise;
+using Presentation.ExercisesManager.Resources.ExerciseOption;
 
 namespace Presentation.ExercisesManager.Transforms.Exercise;
 

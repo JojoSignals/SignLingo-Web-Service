@@ -19,7 +19,8 @@ public class ExerciseQueryService : IExerciseQueryService
     private readonly IQuestionTypeRepository _questionTypeRepository;
     private readonly IMapper _mapper;
 
-    public ExerciseQueryService(IExerciseRepository exerciseRepository,IQuestionTypeRepository questionTypeRepository, IMapper mapper)
+    public ExerciseQueryService(IExerciseRepository exerciseRepository, IQuestionTypeRepository questionTypeRepository,
+        IMapper mapper)
     {
         _exerciseRepository = exerciseRepository;
         _questionTypeRepository = questionTypeRepository;
@@ -33,8 +34,14 @@ public class ExerciseQueryService : IExerciseQueryService
         // {
         //     throw new NoEntitiesFoundException(nameof(Exercise));
         // }
-        
-        var response = _mapper.Map<IReadOnlyCollection<ExerciseResponse>>(exercises);
+
+        var response = exercises.Select(e =>
+        {
+            Console.WriteLine("Exercise " + e.ExerciseOptions.ElementAt(0).OptionId);
+            return _mapper.Map<ExerciseResponse>(e);
+        }).ToList();
+
+
         return response;
     }
 
@@ -45,8 +52,10 @@ public class ExerciseQueryService : IExerciseQueryService
         {
             throw new ExerciseNotFoundException(query.Id);
         }
-        
+
         var response = _mapper.Map<ExerciseResponse>(exercise);
+
+        Console.WriteLine("RESPONSE: " + response);
         return response;
     }
 

@@ -37,8 +37,10 @@ namespace Presentation.ExercisesManager.Controllers
         {
             var query = new GetAllExercisesQuery();
             var result = await _exerciseQueryService.Handle(query);
+
+            var resources = ExerciseResourceFromExerciseResponseAssembler.ToResourcesFromResponse(result);
             
-            return Ok(result);
+            return Ok(resources);
         }
 
         // GET api/<ExerciseController>/5

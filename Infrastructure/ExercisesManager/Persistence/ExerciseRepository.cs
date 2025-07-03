@@ -21,4 +21,9 @@ public class ExerciseRepository : BaseRepository<Exercise>, IExerciseRepository
             .ToListAsync();
 
     }
+    
+    protected override IQueryable<Exercise> IncludeNavigationProperties(DbSet<Exercise> dbSet)
+    {
+        return dbSet.Include(e => e.ExerciseOptions).ThenInclude(eo => eo.Option);
+    }
 }
