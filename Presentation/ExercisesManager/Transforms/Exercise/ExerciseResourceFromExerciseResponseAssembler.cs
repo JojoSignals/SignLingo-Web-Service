@@ -11,6 +11,7 @@ public static class ExerciseResourceFromExerciseResponseAssembler
         var optionsResources = ExerciseOptionResourceFromExerciseOptionResource.ToResourcesFromResponse(response.ExerciseOptions);
         return new ExerciseResource(
             response.Id,
+            response.QuestionTypeId,
             optionsResources
         );
     }
