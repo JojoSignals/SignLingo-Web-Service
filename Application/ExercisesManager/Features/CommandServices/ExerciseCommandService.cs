@@ -37,7 +37,6 @@ public class ExerciseCommandService : IExerciseCommandService
         // var exerciseRequest = _mapper.Map<Exercise>(command);
         var exercise = new Exercise
         {
-            QuestionWord = command.QuestionWord,
             QuestionTypeId = command.QuestionTypeId,
             LevelId = command.LevelId,
             ExerciseOptions = []
@@ -79,7 +78,6 @@ public class ExerciseCommandService : IExerciseCommandService
             throw new ExerciseNotFoundException(command.Id);
         }
 
-        existingExercise.QuestionWord = command.QuestionWord;
 
         await _exerciseRepository.UpdateAsync(existingExercise);
         await _unitOfWork.CompleteAsync();

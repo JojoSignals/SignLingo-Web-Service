@@ -35,18 +35,12 @@ public class LevelCommandService : ILevelCommandService
 
     public async Task<bool> Handle(EditLevelCommand command)
     {
-        var existingLevel = await _levelRepository.GetByIdAsync(command.Id);
-        if (existingLevel == null)
-        {
-            throw new LevelNotFoundException(command.Id);
-        }
+        var level = await _levelRepository.GetByIdAsync(command.Id) ?? throw new LevelNotFoundException(command.Id);
+
+        level.Name = command.LevelName;
+        level.ExperienceRequired = command.ExperienceRequiered;
         
-        existingLevel.LevelName = command.LevelName;
-        existingLevel.LevelDescription = command.LevelDescription;
-        existingLevel.ExperienceRequiered = command.ExperienceRequiered;
-        existingLevel.TotalQuestions = command.TotalQuestions;
-        
-        await _levelRepository.UpdateAsync(existingLevel);
+        await _levelRepository.UpdateAsync(level);
         await _unitOfWork.CompleteAsync();
 
         return true;

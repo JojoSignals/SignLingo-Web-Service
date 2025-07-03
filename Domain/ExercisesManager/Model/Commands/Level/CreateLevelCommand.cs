@@ -1,10 +1,8 @@
 namespace Domain.ExercisesManager.Model.Commands.Level;
 
 public record CreateLevelCommand(
-    string LevelName,
-    string LevelDescription,
-    int ExperienceRequiered,
-    int TotalQuestions,
+    string Name,
+    int ExperienceRequired,
     int UnitId,
     int IconId
     );

@@ -57,7 +57,6 @@ public class AppDbContext : DbContext
         builder.Entity<Exercise>().ToTable("Exercise");
         builder.Entity<Exercise>().HasKey(ex => ex.Id);
         // builder.Entity<Exercise>().Property(ex => ex.Id).UseMySQLAutoIncrementColumn();
-        builder.Entity<Exercise>().Property(ex => ex.QuestionWord).HasMaxLength(50);
         builder.Entity<Exercise>().HasIndex(ex => ex.QuestionTypeId);
 
         // Exercises --- Levels
@@ -113,10 +112,8 @@ public class AppDbContext : DbContext
         //Level
         builder.Entity<Level>().ToTable("Levels");
         builder.Entity<Level>().HasKey(l => l.Id);
-        builder.Entity<Level>().Property(l => l.LevelName).IsRequired().HasMaxLength(50);
-        builder.Entity<Level>().Property(l => l.LevelDescription).IsRequired().HasMaxLength(100);
-        builder.Entity<Level>().Property(l => l.ExperienceRequiered).IsRequired().HasDefaultValue(0);
-        builder.Entity<Level>().Property(l => l.TotalQuestions).IsRequired().HasDefaultValue(0);
+        builder.Entity<Level>().Property(l => l.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Level>().Property(l => l.ExperienceRequired).IsRequired().HasDefaultValue(0);
         builder.Entity<Level>().Property(l => l.UnitId).IsRequired().HasDefaultValue(0);
         builder.Entity<Level>().Property(l => l.IconId).IsRequired().HasDefaultValue(0);
 

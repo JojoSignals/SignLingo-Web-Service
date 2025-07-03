@@ -19,12 +19,12 @@ public static partial class StringExtensions
 
     [GeneratedRegex("(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])", RegexOptions.Compiled)]
     private static partial Regex KebabCaseRegex();
-    
-    
-    
+
+
+
     public static string ToSnakeCase(this string value)
     {
-        return new string(Convert(value.GetEnumerator()).ToArray());
+        return new string([.. Convert(value.GetEnumerator())]);
 
         static IEnumerable<char> Convert(CharEnumerator e)
         {
