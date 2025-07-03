@@ -22,6 +22,7 @@ public static class ExerciseResourceFromExerciseOptionDomainAssembler
 
         return new ExerciseResource(
             exerciseOptions.ElementAt(0).ExerciseId,
+            exerciseOptions.ElementAt(0).Exercise.QuestionTypeId,
             exerciseOptionResources
         );
     }

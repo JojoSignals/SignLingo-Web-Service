@@ -30,8 +30,8 @@ public class ModelToResponse : Profile
         // Exercises Manager
         CreateMap<Exercise, ExerciseResponse>()
             .ForMember(
-                dest => dest.QuestionType,
-                opt => opt.MapFrom(src => src.QuestionType)
+                dest => dest.QuestionTypeId,
+                opt => opt.MapFrom(src => src.QuestionTypeId)
             )
             ;
         CreateMap<EditExerciseCommand, ExerciseResponse>();
