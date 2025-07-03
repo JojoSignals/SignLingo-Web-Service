@@ -7,6 +7,7 @@ public static class UnitResourceFromUnitResponseAssembler
 {
     public static UnitResource ToResourceFromResponse(UnitResponse response)
     {
+        Console.WriteLine("UNIT " + response);
         return new UnitResource(response.Id, response.Name);
     }
 

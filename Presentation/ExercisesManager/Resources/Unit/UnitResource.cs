@@ -1,6 +1,6 @@
 namespace Presentation.ExercisesManager.Resources.Unit;
 
 public record UnitResource(
-    int id,
+    int Id,
     string Name
 );

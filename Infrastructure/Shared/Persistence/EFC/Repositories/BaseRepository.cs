@@ -14,9 +14,16 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         _context = context;
     }
     
-    public async Task AddAsync(TEntity entity)
+    public async Task<TEntity> AddAsync(TEntity entity)
     {
-        await _context.Set<TEntity>().AddAsync(entity);
+       var value =  await _context.Set<TEntity>().AddAsync(entity);
+       
+        if (value.Entity is null)
+        {
+            throw new InvalidOperationException("Failed to add entity.");
+        }
+        
+        return value.Entity;
     }
 
     public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()

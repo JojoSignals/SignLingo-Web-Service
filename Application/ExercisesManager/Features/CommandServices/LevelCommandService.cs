@@ -25,11 +25,13 @@ public class LevelCommandService : ILevelCommandService
     public async Task<LevelResponse> Handle(CreateLevelCommand command)
     {
         var levelRequest = _mapper.Map<Level>(command);
-        
-        await _levelRepository.AddAsync(levelRequest);
+
+        var saveEntityResponse = await _levelRepository.AddAsync(levelRequest);
         await _unitOfWork.CompleteAsync();
         
-        var levelResponse = _mapper.Map<LevelResponse>(levelRequest);
+        var levelEntity = await _levelRepository.GetByIdAsync(saveEntityResponse.Id);
+        
+        var levelResponse = _mapper.Map<LevelResponse>(levelEntity);
         return levelResponse;
     }
 
