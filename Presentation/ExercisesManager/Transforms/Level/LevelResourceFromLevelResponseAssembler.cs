@@ -44,8 +44,24 @@ public static class LevelResourceFromLevelResponseAssembler
         //);
     }
 
+
+    public static LevelWithoutExercisesResource ToWithoutExercisesResourceFromResponse(LevelResponse response)
+    {
+        return new LevelWithoutExercisesResource(
+            response.Id,
+            response.Name,
+            response.ExperienceRequired,
+            response.Exercises.Count,
+            UnitResourceFromUnitResponseAssembler.ToResourceFromResponse(response.Unit),
+            IconResourceFromIconResponseAssembler.ToResourceFromResponse(response.Icon)
+        );
+    }
     public static ICollection<LevelResource> ToResourcesFromResponse(IReadOnlyCollection<LevelResponse> responses)
     {
-        return responses.Select(ToResourceFromResponse).ToList();
+        return [.. responses.Select(ToResourceFromResponse)];
+    }
+    public static ICollection<LevelWithoutExercisesResource> ToWihtoutExercisesResourcesFromResponse(IReadOnlyCollection<LevelResponse> responses)
+    {
+        return [.. responses.Select(ToWithoutExercisesResourceFromResponse)];
     }
 }
