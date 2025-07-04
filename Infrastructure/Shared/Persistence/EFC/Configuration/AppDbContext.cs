@@ -141,7 +141,6 @@ public class AppDbContext : DbContext
         builder.Entity<UserStat>().Property(us => us.Stars).IsRequired();
         builder.Entity<UserStat>().Property(us => us.TotalLivesLost).IsRequired();
         builder.Entity<UserStat>().Property(us => us.TotalAdsWatched).IsRequired();
-        builder.Entity<UserStat>().Property(us => us.QuestionsComplete).IsRequired();
         builder.Entity<UserStat>().Property(us => us.UserId).IsRequired();
 
         builder.Entity<UserCompletedExercise>().HasKey(x => new { x.UserStatId, x.ExerciseId });

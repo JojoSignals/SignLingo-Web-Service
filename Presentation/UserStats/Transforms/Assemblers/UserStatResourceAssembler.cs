@@ -7,13 +7,15 @@ namespace Presentation.UserStats.Transforms.Assemblers
     {
         public static UserStatResource ToResource(UserStatsResponse entity)
         {
+            Console.WriteLine("[DEBUG] " + entity.UserCompletedExercises);
+
             return new UserStatResource(
                 entity.Id,
                 entity.Lives,
                 entity.Stars,
                 entity.TotalLivesLost,
                 entity.TotalAdsWatched,
-                entity.QuestionsComplete,
+                [.. entity.UserCompletedExercises.Select(e => e.ExerciseId)],
                 entity.UserId
             );
         }

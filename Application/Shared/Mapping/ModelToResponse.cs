@@ -58,7 +58,8 @@ public class ModelToResponse : Profile
         CreateMap<DeleteLevelCommand, LevelResponse>();
 
         //User Stats
-        CreateMap<UserStat, UserStatsResponse>();
+        CreateMap<UserStat, UserStatsResponse>()
+            .ForMember(dest => dest.UserCompletedExercises, opt => opt.MapFrom(src => src.UserCompletedExercises));
 
     }
 }

@@ -9,9 +9,8 @@ public class UserStat : BaseModel
     public int Stars { get; set; } = 0;
     public int TotalLivesLost { get; set; } = 0;
     public int TotalAdsWatched { get; set; } = 0;
-    public int QuestionsComplete { get; set; } = 0;
 
-    public UserCompletedExercise[] UserCompletedExercises { get; set; } = [];
+    public List<UserCompletedExercise> UserCompletedExercises { get; set; } = [];
     // FK hacia User
     public int UserId { get; set; }
 }

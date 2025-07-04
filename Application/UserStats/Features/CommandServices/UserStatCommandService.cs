@@ -4,7 +4,9 @@ using Domain.Shared.Repository;
 using Domain.UserStats.Services;
 using Domain.UserStats.Model.Responses;
 using Domain.UserStats.Model.Commands;
+using Domain.UserStats.Model.ValueObjects;
 using AutoMapper;
+using Application.Shared.Features.OutboundServices.ACL;
 
 namespace Application.UserStats.Features.CommandServices;
 
@@ -13,12 +15,14 @@ public class UserStatCommandService : IUserStatsCommandService
     private readonly IUserStatsRepository _userStatRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IExternalSecurityService _externalSecurityService;
 
-    public UserStatCommandService(IUserStatsRepository userStatRepository, IUnitOfWork unitOfWork, IMapper mapper)
+    public UserStatCommandService(IUserStatsRepository userStatRepository, IUnitOfWork unitOfWork, IMapper mapper, IExternalSecurityService externalSecurityService)
     {
         _userStatRepository = userStatRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _externalSecurityService = externalSecurityService;
     }
 
 
@@ -68,6 +72,63 @@ public class UserStatCommandService : IUserStatsCommandService
         try
         {
             await _userStatRepository.DeleteAsync(command.Id);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> Handle(AddExerciseToCompletedCommand command)
+    {
+
+        var userId = _externalSecurityService.GetCurrentUserId() ?? throw new ArgumentNullException("UserId not registered");
+
+        var entity = await _userStatRepository.GetByUserIdAsync(userId);
+
+        if (entity == null)
+            return false;
+
+        // 1) Comprueba si ya existe
+        var already = entity.UserCompletedExercises
+                            .Any(x => x.ExerciseId == command.ExerciseId);
+        if (!already)
+        {
+            // 2) Sólo si no existe, lo agregas
+            var newCompleted = new UserCompletedExercise
+            {
+                ExerciseId = command.ExerciseId,
+                UserStatId = entity.Id
+            };
+            entity.UserCompletedExercises.Add(newCompleted);
+
+            await _userStatRepository.UpdateAsync(entity);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        return true;
+
+    }
+
+    public async Task<bool> Handle(LostLiveCommand command)
+    {
+        try
+        {
+            var userId = _externalSecurityService.GetCurrentUserId() ?? throw new ArgumentNullException("UserId not registered");
+
+            var entity = await _userStatRepository.GetByUserIdAsync(userId);
+
+            if (entity == null) return false;
+
+            if (entity.Lives > 0)
+            {
+                entity.TotalLivesLost += 1;
+                entity.Lives -= 1;
+            }
+
+            await _userStatRepository.UpdateAsync(entity);
             await _unitOfWork.CompleteAsync();
             return true;
         }

@@ -12,7 +12,15 @@ public class UserStatRepository(AppDbContext context) : BaseRepository<UserStat>
     {
         return await _context
             .UserStats
+            .Include(u => u.UserCompletedExercises)
             .FirstOrDefaultAsync(us => us.UserId == userId);
+    }
+
+
+
+    protected override IQueryable<UserStat> IncludeNavigationProperties(DbSet<UserStat> dbSet)
+    {
+        return dbSet.Include(u => u.UserCompletedExercises);
     }
 
 }

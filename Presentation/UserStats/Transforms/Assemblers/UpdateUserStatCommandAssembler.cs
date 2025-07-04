@@ -13,7 +13,6 @@ namespace Presentation.UserStats.Transforms.Assemblers
                 Stars = resource.Stars,
                 TotalLivesLost = resource.TotalLivesLost,
                 TotalAdsWatched = resource.TotalAdsWatched,
-                QuestionsComplete = resource.QuestionsComplete
             };
         }
     }
