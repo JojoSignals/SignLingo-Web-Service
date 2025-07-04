@@ -26,7 +26,8 @@ public class UnitCommandService : IUnitCommandService
     public async Task<UnitResponse> Handle(CreateUnitCommand command)
     {
         var unitRequest = _mapper.Map<Unit>(command);
-        
+        Console.WriteLine("UnitRequest: " + unitRequest.Name);
+
         await _unitRepository.AddAsync(unitRequest);
         await _unitOfWork.CompleteAsync();
         

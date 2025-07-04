@@ -30,12 +30,10 @@ public class ModelToResponse : Profile
         CreateMap<DeleteOptionCommand, OptionResponse>();
 
         // Exercises Manager
-        CreateMap<Exercise, ExerciseResponse>()
-            .ForMember(
-                dest => dest.QuestionType,
-                opt => opt.MapFrom(src => src.QuestionType)
-            )
-            ;
+        CreateMap<ExerciseOption, ExerciseOptionResponse>();
+        CreateMap<Exercise, ExerciseResponse>().ForMember(
+            dest => dest.ExerciseOptions, opt => opt.MapFrom(src => src.ExerciseOptions));
+
         CreateMap<EditExerciseCommand, ExerciseResponse>();
         CreateMap<CreateExerciseCommand, ExerciseResponse>();
         CreateMap<DeleteExerciseCommand, ExerciseResponse>();
@@ -52,8 +50,9 @@ public class ModelToResponse : Profile
 
         CreateMap<Level, LevelResponse>()
             .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Unit))
-            .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.Icon));
-        
+            .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.Icon))
+            .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src => src.Exercises));
+
         CreateMap<EditLevelCommand, LevelResponse>();
         CreateMap<CreateLevelCommand, LevelResponse>();
         CreateMap<DeleteLevelCommand, LevelResponse>();

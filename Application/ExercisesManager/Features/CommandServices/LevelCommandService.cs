@@ -25,28 +25,24 @@ public class LevelCommandService : ILevelCommandService
     public async Task<LevelResponse> Handle(CreateLevelCommand command)
     {
         var levelRequest = _mapper.Map<Level>(command);
-        
-        await _levelRepository.AddAsync(levelRequest);
+
+        var saveEntityResponse = await _levelRepository.AddAsync(levelRequest);
         await _unitOfWork.CompleteAsync();
         
-        var levelResponse = _mapper.Map<LevelResponse>(levelRequest);
+        var levelEntity = await _levelRepository.GetByIdAsync(saveEntityResponse.Id);
+        
+        var levelResponse = _mapper.Map<LevelResponse>(levelEntity);
         return levelResponse;
     }
 
     public async Task<bool> Handle(EditLevelCommand command)
     {
-        var existingLevel = await _levelRepository.GetByIdAsync(command.Id);
-        if (existingLevel == null)
-        {
-            throw new LevelNotFoundException(command.Id);
-        }
+        var level = await _levelRepository.GetByIdAsync(command.Id) ?? throw new LevelNotFoundException(command.Id);
+
+        level.Name = command.LevelName;
+        level.ExperienceRequired = command.ExperienceRequiered;
         
-        existingLevel.LevelName = command.LevelName;
-        existingLevel.LevelDescription = command.LevelDescription;
-        existingLevel.ExperienceRequiered = command.ExperienceRequiered;
-        existingLevel.TotalQuestions = command.TotalQuestions;
-        
-        await _levelRepository.UpdateAsync(existingLevel);
+        await _levelRepository.UpdateAsync(level);
         await _unitOfWork.CompleteAsync();
 
         return true;

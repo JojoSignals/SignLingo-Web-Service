@@ -5,8 +5,8 @@ using Presentation.ExercisesManager.Resources.Unit;
 namespace Presentation.ExercisesManager.Resources.Level;
 
 public record LevelResource(
-    string LevelName,
-    string LevelDescription,
+    int Id,
+    string Name,
     int ExperienceRequired,
     int TotalQuestions,
     UnitResource Unit,

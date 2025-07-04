@@ -1,6 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.Level;
 using Domain.ExercisesManager.Model.Queries.Level;
 using Domain.ExercisesManager.Services.Level;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Level;
@@ -9,7 +10,8 @@ using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class LevelController : ControllerBase
     {
@@ -27,8 +29,8 @@ namespace Presentation.ExercisesManager.Controllers
       public async Task<IActionResult> GetAllLevelsAsync()
       {
           var query = new GetAllLevelsQuery();
-          var result = await _levelQueryService.Handle(query);
-          var resources = LevelResourceFromLevelResponseAssembler.ToResourcesFromResponse(result);
+          var responses = await _levelQueryService.Handle(query);
+          var resources = LevelResourceFromLevelResponseAssembler.ToResourcesFromResponse(responses);
           return Ok(resources);
       }
       
@@ -44,7 +46,7 @@ namespace Presentation.ExercisesManager.Controllers
       }
       
       // POST LEVEL
-      [HttpPost("create-level")]
+      [HttpPost]
       public async Task<IActionResult> CreateLevelAsync([FromBody] CreateLevelResource resource)
       {
           if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -56,7 +58,7 @@ namespace Presentation.ExercisesManager.Controllers
           return StatusCode(201, output);
       }
       // PATCH EXERCISE WITH ID
-      [HttpPatch("patch/{id}")]
+      [HttpPatch("{id}")]
       public async Task<IActionResult> EditLevelAsync(int id, [FromBody] EditLevelResource resource)
       {
           if(!ModelState.IsValid) return StatusCode(400, "Invlid resource data");

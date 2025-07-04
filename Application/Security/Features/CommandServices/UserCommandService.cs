@@ -21,10 +21,11 @@ public class UserCommandService : IUserCommandService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGoogleCaptchaService _captchaService;
     private readonly IImageManagerService _imageManagerService;
+    private readonly IUserStatContextService _userStatContextService;
 
     public UserCommandService(IUserRepository userRepository, IEncryptService encryptService,
         ITokenService tokenService, IMapper mapper, IUnitOfWork unitOfWork, IGoogleCaptchaService captchaService,
-        IImageManagerService imageService)
+        IImageManagerService imageService, IUserStatContextService userStatContextService)
     {
         _userRepository = userRepository;
         _encryptService = encryptService;
@@ -33,15 +34,16 @@ public class UserCommandService : IUserCommandService
         _unitOfWork = unitOfWork;
         _captchaService = captchaService;
         _imageManagerService = imageService;
+        _userStatContextService = userStatContextService;
     }
 
     public async Task<(UserResponse user, string token)> Handle(SignInCommand command)
     {
-        var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
+        /*var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
         if (!isCaptchaValid)
         {
             throw new InvalidCaptchaException();
-        }
+        }*/
 
         var existingUser = await _userRepository.GetUserByEmailAsync(command.Email);
         if (existingUser == null)
@@ -60,11 +62,11 @@ public class UserCommandService : IUserCommandService
 
     public async Task<UserResponse> Handle(SignUpCommand command)
     {
-        var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
+        /*var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
         if (!isCaptchaValid)
         {
             throw new InvalidCaptchaException();
-        }
+        }*/
 
         var userWithSameEmail = await _userRepository.GetUserByEmailAsync(command.Email);
         if (userWithSameEmail != null)
@@ -80,6 +82,8 @@ public class UserCommandService : IUserCommandService
 
         await _userRepository.AddAsync(userEntity);
         await _unitOfWork.CompleteAsync();
+
+        await _userStatContextService.CreateUserStat(userEntity.Id);
 
         var userResponse = _mapper.Map<UserResponse>(userEntity);
         return userResponse;

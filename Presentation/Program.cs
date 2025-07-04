@@ -1,8 +1,12 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Application.ExercisesManager.Features.CommandServices;
 using Application.ExercisesManager.Features.QueryServices;
+using Application.Security.ACL;
 using Application.Security.Features.CommandServices;
 using Application.Security.Features.OutboundServices;
 using Application.Security.Features.QueryServices;
+using Application.Shared.Features.OutboundServices.ACL;
 using Application.Shared.Mapping;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services.Exercise;
@@ -26,16 +30,26 @@ using Application.UserStats.Features.QueryServices;
 using Domain.UserStats.Repositories;
 using Domain.UserStats.Services;
 using Infrastructure.UserStats.Persistence;
+using Microsoft.IdentityModel.Tokens;
+using Presentation.Security.ACL;
+using Presentation.Shared.ACL;
+using Presentation.Shared.ASP.Configuration;
+using Application.UserStats.ACL;
+using Presentation.UserStats.ACL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new KebabCaseRouteNamingConvention());
+    options.Conventions.Add(new PrefixVersioningNamingConvention("api/v1"));
+});
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(RequestToModel),
-    typeof(ModelToResponse)); 
+    typeof(ModelToResponse));
 //Dependency Injection Native
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
@@ -44,6 +58,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEncryptService, EncryptService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
+builder.Services.AddScoped<ISecurityContextFacade, SecurityContextFacade>();
+
 
 // Dependency Injenction ExercisesManager
 //Exercise
@@ -76,13 +92,16 @@ builder.Services.AddScoped<IOptionCommandService, OptionCommandService>();
 // DI Shared 
 builder.Services.Configure<CloudinaryCredentials>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddScoped<IImageManagerService, ImageManagerService>();
+builder.Services.AddScoped<IExternalSecurityService, ExternalSecurityService>();
 
 
 // Dependency Injection UserStats
 builder.Services.AddScoped<IUserStatsRepository, UserStatRepository>();
-builder.Services.AddScoped<UserStatCommandService>(); 
-builder.Services.AddScoped<UserStatQueryService>();
+builder.Services.AddScoped<IUserStatsCommandService, UserStatCommandService>();
 builder.Services.AddScoped<IUserStatsQueryService, UserStatQueryService>();
+builder.Services.AddScoped<IUserStatsQueryService, UserStatQueryService>();
+builder.Services.AddScoped<IUserStatContextFacade, UserStatContextFacade>();
+builder.Services.AddScoped<IUserStatContextService, UserStatContextService>();
 
 
 builder.Services.AddHttpClient();
@@ -92,10 +111,7 @@ var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__De
                        builder.Configuration.GetConnectionString("signLingoCenterConnection");
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowTests", policy =>
-    {
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-    });
+    options.AddPolicy("AllowTests", policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -125,8 +141,61 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         }
     }
 });
+builder.Services.AddHttpContextAccessor();
+
+var jwtConfig = builder.Configuration.GetSection("Auth");
+var secretKey = jwtConfig["SecretKey"];
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+
+        ValidateIssuer = false,
+        ValidateAudience = false,
+
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your token in the text input.\r\n\r\nExample: \"Bearer abc123\""
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 var app = builder.Build();
+
 app.UseCors("AllowTests");
 //DB-Ensure Creation
 EnsureDatabaseCreation(app);
@@ -141,6 +210,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -148,13 +218,10 @@ app.MapControllers();
 app.Run();
 
 // Method to handle database creation
-void EnsureDatabaseCreation(WebApplication app)
+void EnsureDatabaseCreation(WebApplication appArgs)
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        context.Database.EnsureCreated();
-        Console.WriteLine("AQUI ESTA ENSURE DATA BASE");
-        AppDbContextSeed.LoadQuestionType(context);
-    }
+    var scope = appArgs.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+    AppDbContextSeed.LoadQuestionType(context);
 }

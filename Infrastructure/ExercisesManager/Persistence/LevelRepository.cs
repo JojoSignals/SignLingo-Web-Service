@@ -11,9 +11,10 @@ public class LevelRepository : BaseRepository<Level>, ILevelRepository
     public LevelRepository(AppDbContext context) : base(context)
     {
     }
-    
+
     protected override IQueryable<Level> IncludeNavigationProperties(DbSet<Level> dbSet)
     {
-        return dbSet.Include(l => l.Unit).Include(l => l.Icon).Include(l => l.Exercises);
+        return dbSet.Include(l => l.Unit).Include(l => l.Icon).Include(l => l.Exercises)
+            .ThenInclude(e => e.ExerciseOptions).ThenInclude(eo => eo.Option).AsSplitQuery();
     }
 }

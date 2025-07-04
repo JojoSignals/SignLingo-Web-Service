@@ -1,5 +1,6 @@
 using Domain.ExercisesManager.Model.Aggregates;
 using Presentation.ExercisesManager.Resources.Exercise;
+using Presentation.ExercisesManager.Resources.ExerciseOption;
 
 namespace Presentation.ExercisesManager.Transforms.Exercise;
 
@@ -22,6 +23,7 @@ public static class ExerciseResourceFromExerciseOptionDomainAssembler
 
         return new ExerciseResource(
             exerciseOptions.ElementAt(0).ExerciseId,
+            0,
             exerciseOptionResources
         );
     }

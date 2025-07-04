@@ -3,6 +3,7 @@ using Domain.ExercisesManager.Model.Queries.Exercise;
 using Domain.ExercisesManager.Model.Queries.ExerciseOption;
 using Domain.ExercisesManager.Services.Exercise;
 using Domain.ExercisesManager.Services.ExerciseOption;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -11,7 +12,8 @@ using Presentation.ExercisesManager.Transforms.Exercise;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/v1/exercises")]
+    [Authorize]
+    [Route("[controller]")]
     [ApiController]
     public class ExerciseController : ControllerBase
     {
@@ -37,8 +39,10 @@ namespace Presentation.ExercisesManager.Controllers
         {
             var query = new GetAllExercisesQuery();
             var result = await _exerciseQueryService.Handle(query);
+
+            var resources = ExerciseResourceFromExerciseResponseAssembler.ToResourcesFromResponse(result);
             
-            return Ok(result);
+            return Ok(resources);
         }
 
         // GET api/<ExerciseController>/5
@@ -65,7 +69,7 @@ namespace Presentation.ExercisesManager.Controllers
         
         // DIEGOOOOOOOOOOOOOOO
         // POST api/<ExerciseController>
-        [HttpPost("create-exercise")]
+        [HttpPost]
         public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseResource resource)
         {
             var command = CreateExerciseCommandFromResourceAssembler
@@ -77,7 +81,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
 
         // PATCH api/<ExerciseController>/5
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditExerciseAsync(int id, [FromBody] EditExerciseResource resource)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");

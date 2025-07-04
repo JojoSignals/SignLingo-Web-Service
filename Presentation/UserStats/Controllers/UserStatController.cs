@@ -1,6 +1,9 @@
 using Application.UserStats.Features.CommandServices;
 using Application.UserStats.Features.QueryServices;
+using Domain.UserStats.Model.Commands;
 using Domain.UserStats.Model.Queries;
+using Domain.UserStats.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.UserStats.Resources;
 using Presentation.UserStats.Transforms.Assemblers;
@@ -8,13 +11,13 @@ using Presentation.UserStats.Transforms.Assemblers;
 namespace Presentation.UserStats.Controllers;
 
 [ApiController]
-[Route("api/v1/userstats")]
+[Route("[controller]")]
 public class UserStatController : ControllerBase
 {
-    private readonly UserStatCommandService _commandService;
-    private readonly UserStatQueryService _queryService;
+    private readonly IUserStatsCommandService _commandService;
+    private readonly IUserStatsQueryService _queryService;
 
-    public UserStatController(UserStatCommandService commandService, UserStatQueryService queryService)
+    public UserStatController(IUserStatsCommandService commandService, IUserStatsQueryService queryService)
     {
         _commandService = commandService;
         _queryService = queryService;
@@ -54,25 +57,30 @@ public class UserStatController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserStatResource resource)
     {
-        var stat = CreateUserStatCommandAssembler.ToEntity(resource);
-        await _commandService.CreateAsync(stat);
-        return CreatedAtAction(nameof(GetById), new { id = stat.Id }, null);
+        var command = CreateUserStatCommandFromResourceAssembler.ToCommandFromResource(resource);
+        await _commandService.Handle(command);
+
+        return Created();
+        //return CreatedAtAction(nameof(GetById), new { id = stat.Id }, null);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, UpdateUserStatResource resource)
     {
-        var stat = UpdateUserStatCommandAssembler.ToEntity(resource);
-        stat.Id = id;
-        await _commandService.UpdateAsync(stat);
+        var command = UpdateUserStatCommandFromResourceAssembler.ToCommandFromResource(id, resource);
+        await _commandService.Handle(command);
+        //var stat = UpdateUserStatCommandAssembler.ToEntity(resource);
+        //stat.Id = id;
+        //await _commandService.UpdateAsync(stat);
         return NoContent();
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await _commandService.DeleteAsync(id);
-        if (!result) return NotFound();
+        var command = new DeleteUserStatsCommand(id);
+
+        await _commandService.Handle(command);
         return NoContent();
     }
 }

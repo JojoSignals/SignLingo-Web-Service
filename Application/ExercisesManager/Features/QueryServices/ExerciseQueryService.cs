@@ -1,6 +1,7 @@
 using Application.ExercisesManager.Exceptions;
 using Application.ExercisesManager.Exceptions.Exercise;
 using Application.Shared.Exceptions;
+using Application.Shared.Features.OutboundServices.ACL;
 using AutoMapper;
 using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Entities;
@@ -17,24 +18,34 @@ public class ExerciseQueryService : IExerciseQueryService
 {
     private readonly IExerciseRepository _exerciseRepository;
     private readonly IQuestionTypeRepository _questionTypeRepository;
+    private readonly IExternalSecurityService _externalSecurityService;
     private readonly IMapper _mapper;
 
-    public ExerciseQueryService(IExerciseRepository exerciseRepository,IQuestionTypeRepository questionTypeRepository, IMapper mapper)
+    public ExerciseQueryService(IExerciseRepository exerciseRepository, IQuestionTypeRepository questionTypeRepository,
+        IMapper mapper, IExternalSecurityService externalSecurityService)
     {
         _exerciseRepository = exerciseRepository;
         _questionTypeRepository = questionTypeRepository;
         _mapper = mapper;
+        this._externalSecurityService = externalSecurityService;
     }
 
     public async Task<IReadOnlyCollection<ExerciseResponse>> Handle(GetAllExercisesQuery query)
     {
         var exercises = await _exerciseRepository.GetAllAsync();
-        // if (exercises.Count == 0)
-        // {
-        //     throw new NoEntitiesFoundException(nameof(Exercise));
-        // }
+
+        var userId = _externalSecurityService.GetCurrentUserId();
         
-        var response = _mapper.Map<IReadOnlyCollection<ExerciseResponse>>(exercises);
+        Console.WriteLine("USER ID: " + userId);
+        
+        
+        var response = exercises.Select(e =>
+        {
+            Console.WriteLine("Exercise " + e.ExerciseOptions.ElementAt(0).OptionId);
+            return _mapper.Map<ExerciseResponse>(e);
+        }).ToList();
+
+
         return response;
     }
 
@@ -45,8 +56,10 @@ public class ExerciseQueryService : IExerciseQueryService
         {
             throw new ExerciseNotFoundException(query.Id);
         }
-        
+
         var response = _mapper.Map<ExerciseResponse>(exercise);
+
+        Console.WriteLine("RESPONSE: " + response);
         return response;
     }
 

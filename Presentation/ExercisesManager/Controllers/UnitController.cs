@@ -1,13 +1,15 @@
 using Domain.ExercisesManager.Model.Commands.Unit;
 using Domain.ExercisesManager.Model.Queries.Unit;
 using Domain.ExercisesManager.Services.Unit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Unit;
 using Presentation.ExercisesManager.Transforms.Unit;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/v1/units")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class UnitController : ControllerBase
     {
@@ -42,7 +44,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST EXERCISE
-        [HttpPost("create-unit")]
+        [HttpPost]
         public async Task<IActionResult> CreateUnitAsync([FromBody] CreateUnitResource resource)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -56,7 +58,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         // PATCH Exercise with Id
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditUnitAsync(int id, [FromBody] EditUnitResource resource)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");

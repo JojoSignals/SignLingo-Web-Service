@@ -1,7 +1,7 @@
-namespace Presentation.ExercisesManager.Resources.Exercise;
+namespace Presentation.ExercisesManager.Resources.ExerciseOption;
 
 public record ExerciseOptionResource(
-    int OptionId,
+    int Id,
     string Word,
     string Url,
     bool IsCorrect

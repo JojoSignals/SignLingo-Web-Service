@@ -1,6 +1,7 @@
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Queries;
 using Domain.Security.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Security.Resources;
@@ -8,7 +9,8 @@ using Presentation.Security.Transform;
 
 namespace Presentation.Security.Controllers
 {
-    [Route("api/v1/users")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {

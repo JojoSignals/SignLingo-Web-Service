@@ -13,7 +13,6 @@
       <Folder Include="Security\Model\Entities\" />
       <Folder Include="Transaction\" />
       <Folder Include="UserStats\Model\Entities\" />
-      <Folder Include="UserStats\Model\ValueObjects\" />
     </ItemGroup>
 
 </Project>

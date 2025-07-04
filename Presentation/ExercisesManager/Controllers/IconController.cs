@@ -5,6 +5,7 @@ using Domain.ExercisesManager.Model.Queries.IconQueries;
 using Domain.ExercisesManager.Services;
 using Domain.ExercisesManager.Services.IconServices;
 using Domain.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources;
@@ -14,7 +15,9 @@ using Presentation.ExercisesManager.Transforms.Icon;
 
 namespace Presentation.ExercisesManager.Controllers
 {
-    [Route("api/[controller]")]
+    // [Route("api/v1/[controller]")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class IconController : ControllerBase
     {
@@ -48,7 +51,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //POST ICON
-        [HttpPost("create-icon")]
+        [HttpPost]
         public async Task<IActionResult> CreateIconAsync([FromForm] CreateIconResource resource)
         {
             if (resource == null) return BadRequest("Invalid resource data");
@@ -62,7 +65,7 @@ namespace Presentation.ExercisesManager.Controllers
         }
         
         //PATCH ICONS WITH ID
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditIconAsync(int id, [FromBody] EditIconResource questionWord)
         {
             if(!ModelState.IsValid) return StatusCode(400, "Invalid resource data");

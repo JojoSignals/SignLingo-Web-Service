@@ -7,6 +7,6 @@ public static class CreateExerciseCommandFromResourceAssembler
 {
     public static CreateExerciseCommand ToCommandFromResource(CreateExerciseResource resource)
     {
-        return new CreateExerciseCommand(resource.QuestionWord, resource.QuestionTypeId, resource.LevelId, resource.OptionsId);
+        return new CreateExerciseCommand(resource.QuestionTypeId, resource.LevelId, resource.OptionsId);
     }
 }

@@ -14,6 +14,7 @@ namespace Presentation.UserStats.Transforms.Assemblers
                 Stars = resource.Stars,
                 TotalLivesLost = resource.TotalLivesLost,
                 TotalAdsWatched = resource.TotalAdsWatched,
+                UserCompletedExercises = [],
                 QuestionsComplete = resource.QuestionsComplete,
                 UserId = resource.UserId
             };
