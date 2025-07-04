@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <Folder Include="Advertisement\" />
+      <Folder Include="ExercisesManager\Features\OutboundServices\ACL\" />
       <Folder Include="Notification\" />
       <Folder Include="Ranking\" />
       <Folder Include="Transaction\" />

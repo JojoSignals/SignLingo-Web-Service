@@ -5,6 +5,7 @@ using Domain.ExercisesManager.Model.Queries.IconQueries;
 using Domain.ExercisesManager.Services;
 using Domain.ExercisesManager.Services.IconServices;
 using Domain.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources;
@@ -16,6 +17,7 @@ namespace Presentation.ExercisesManager.Controllers
 {
     // [Route("api/v1/[controller]")]
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class IconController : ControllerBase
     {

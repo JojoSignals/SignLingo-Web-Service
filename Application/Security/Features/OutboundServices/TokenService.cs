@@ -7,73 +7,79 @@ using Domain.Security.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace Application.Security.Features.OutboundServices;
 
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
-    
+
     public TokenService(IConfiguration configuration)
     {
         _configuration = configuration;
     }
+
     public string GenerateToken(User user)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Auth:Secretkey"]));
-        
+        var keyBytes = Encoding.UTF8.GetBytes(_configuration["Auth:SecretKey"] ?? string.Empty);
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
+            Subject = new ClaimsIdentity([
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Username),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
-            }),
+            ]),
             Expires = DateTime.UtcNow.AddHours(4),
-            SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(keyBytes),
+                SecurityAlgorithms.HmacSha256)
         };
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-
-        return tokenHandler.WriteToken(token);
+        return new JwtSecurityTokenHandler()
+            .WriteToken(new JwtSecurityTokenHandler()
+                .CreateToken(tokenDescriptor));
     }
+
 
     public User? ValidateToken(string token)
     {
-        // If token is null or empty
         if (string.IsNullOrEmpty(token))
-            // Return null 
             return null;
-        // Otherwise, perform validation
-        var tokenHandler = new JsonWebTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Auth:Secretkey"]);
-  
-        var tokenValidationResult =  tokenHandler.ValidateToken(token, new TokenValidationParameters
+
+
+        var key = Encoding.UTF8.GetBytes(_configuration["Auth:SecretKey"]);
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var parameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuer = false,
             ValidateAudience = false,
-            // Expiration without delay
+            ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
-        });
-
-        var jwtToken = (JsonWebToken)tokenValidationResult.SecurityToken;
-        var userId = int.Parse(jwtToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value);  
-        var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "role");     
-        var usernameClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "unique_name"); 
-
-
-            
-        var user = new User()
-        {
-            Id = userId,
-            Username = usernameClaim.Value,
-            Role = (UserRoles)int.Parse(roleClaim.Value)
         };
-            
-        return user;
+
+        try
+        {
+            var principal = tokenHandler.ValidateToken(token, parameters, out var validatedToken);
+
+            var userId = int.Parse(principal.FindFirst(JwtRegisteredClaimNames.Sub)!.Value);
+            var username = principal.FindFirst(JwtRegisteredClaimNames.Name)!.Value;
+            var role = principal.FindFirst(ClaimTypes.Role)!.Value;
+
+            return new User
+            {
+                Id = userId,
+                Username = username,
+                Role = (UserRoles)Enum.Parse(typeof(UserRoles), role)
+            };
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

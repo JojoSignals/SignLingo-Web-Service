@@ -1,6 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.Unit;
 using Domain.ExercisesManager.Model.Queries.Unit;
 using Domain.ExercisesManager.Services.Unit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Unit;
 using Presentation.ExercisesManager.Transforms.Unit;
@@ -8,6 +9,7 @@ using Presentation.ExercisesManager.Transforms.Unit;
 namespace Presentation.ExercisesManager.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class UnitController : ControllerBase
     {

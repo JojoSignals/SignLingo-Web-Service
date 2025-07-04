@@ -1,6 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.Level;
 using Domain.ExercisesManager.Model.Queries.Level;
 using Domain.ExercisesManager.Services.Level;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Level;
@@ -10,6 +11,7 @@ using Presentation.ExercisesManager.Transforms.Unit;
 namespace Presentation.ExercisesManager.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class LevelController : ControllerBase
     {

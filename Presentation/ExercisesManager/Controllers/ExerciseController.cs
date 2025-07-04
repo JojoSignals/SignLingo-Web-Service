@@ -3,6 +3,7 @@ using Domain.ExercisesManager.Model.Queries.Exercise;
 using Domain.ExercisesManager.Model.Queries.ExerciseOption;
 using Domain.ExercisesManager.Services.Exercise;
 using Domain.ExercisesManager.Services.ExerciseOption;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using Presentation.ExercisesManager.Transforms.Exercise;
 
 namespace Presentation.ExercisesManager.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ExerciseController : ControllerBase

@@ -1,6 +1,7 @@
 using Domain.ExercisesManager.Model.Commands.Option;
 using Domain.ExercisesManager.Model.Queries.Option;
 using Domain.ExercisesManager.Services.Option;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ExercisesManager.Resources.Option;
@@ -9,6 +10,7 @@ using Presentation.ExercisesManager.Transforms.Option;
 namespace Presentation.ExercisesManager.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class OptionController : ControllerBase
     {

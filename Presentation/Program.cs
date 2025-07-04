@@ -1,8 +1,12 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Application.ExercisesManager.Features.CommandServices;
 using Application.ExercisesManager.Features.QueryServices;
+using Application.Security.ACL;
 using Application.Security.Features.CommandServices;
 using Application.Security.Features.OutboundServices;
 using Application.Security.Features.QueryServices;
+using Application.Shared.Features.OutboundServices.ACL;
 using Application.Shared.Mapping;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services.Exercise;
@@ -21,6 +25,9 @@ using Infrastructure.Shared.Persistence.EFC.Configuration;
 using Infrastructure.Shared.Persistence.EFC.Repositories;
 using Infrastructure.Shared.Services.CloudinaryImageService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Presentation.Security.ACL;
+using Presentation.Shared.ACL;
 using Presentation.Shared.ASP.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,12 +37,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options =>
 {
-    
     options.Conventions.Add(new KebabCaseRouteNamingConvention());
     options.Conventions.Add(new PrefixVersioningNamingConvention("api/v1"));
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(RequestToModel),
     typeof(ModelToResponse));
 //Dependency Injection Native
@@ -46,6 +51,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEncryptService, EncryptService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IGoogleCaptchaService, GoogleCaptchaService>();
+builder.Services.AddScoped<ISecurityContextFacade, SecurityContextFacade>();
 
 // Dependency Injenction ExercisesManager
 //Exercise
@@ -78,6 +84,7 @@ builder.Services.AddScoped<IOptionCommandService, OptionCommandService>();
 // DI Shared 
 builder.Services.Configure<CloudinaryCredentials>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddScoped<IImageManagerService, ImageManagerService>();
+builder.Services.AddScoped<IExternalSecurityService, ExternalSecurityService>();
 
 
 builder.Services.AddHttpClient();
@@ -117,6 +124,58 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         }
     }
 });
+builder.Services.AddHttpContextAccessor();
+
+var jwtConfig = builder.Configuration.GetSection("Auth");
+var secretKey = jwtConfig["SecretKey"];
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your token in the text input.\r\n\r\nExample: \"Bearer abc123\""
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -134,6 +193,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
