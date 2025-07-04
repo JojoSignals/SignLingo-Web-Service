@@ -3,6 +3,7 @@ using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Entities;
 using Infrastructure.Shared.Persistence.EFC.Configuration.Extensions;
+using Infrastructure.Shared.Persistence.EFC.Configuration.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Domain.UserStats.Model.Agreggates;
@@ -34,7 +35,9 @@ public class AppDbContext : DbContext
 
     public DbSet<ExerciseOption> ExerciseOptions { get; set; }
 
+
     public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

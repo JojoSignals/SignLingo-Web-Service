@@ -216,6 +216,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+return;
 
 // Method to handle database creation
 void EnsureDatabaseCreation(WebApplication appArgs)
