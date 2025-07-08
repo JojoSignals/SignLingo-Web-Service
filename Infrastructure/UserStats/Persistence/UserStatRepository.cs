@@ -15,6 +15,18 @@ public class UserStatRepository(AppDbContext context) : BaseRepository<UserStat>
             .Include(u => u.UserCompletedExercises)
             .FirstOrDefaultAsync(us => us.UserId == userId);
     }
+    
+    public async Task<List<UserStat>> GetAllWithLessThanMaxLivesAsync(int maxLives, CancellationToken ct)
+    {
+        return await _context.UserStats
+            .Where(u => u.Lives < maxLives)
+            .ToListAsync(ct);
+    }
+
+    public async Task UpdateRangeAsync(IEnumerable<UserStat> users)
+    {
+        _context.UserStats.UpdateRange(users);
+    }
 
 
 
