@@ -96,7 +96,7 @@ public class UserStatCommandService : IUserStatsCommandService
                             .Any(x => x.ExerciseId == command.ExerciseId);
         if (!already)
         {
-            // 2) Sólo si no existe, lo agregas
+            // 2) Sï¿½lo si no existe, lo agregas
             var newCompleted = new UserCompletedExercise
             {
                 ExerciseId = command.ExerciseId,
@@ -136,5 +136,18 @@ public class UserStatCommandService : IUserStatsCommandService
         {
             return false;
         }
+    }
+
+    public async Task IncreaseLivesAsync(CancellationToken cancellationToken)
+    {
+        var users = await _userStatRepository.GetAllWithLessThanMaxLivesAsync(5, cancellationToken);
+
+        foreach (var user in users)
+        {
+            user.Lives += 1;
+        }
+
+        await _userStatRepository.UpdateRangeAsync(users); 
+        await _unitOfWork.CompleteAsync();
     }
 }

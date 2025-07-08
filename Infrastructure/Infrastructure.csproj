@@ -21,9 +21,16 @@
 
     <ItemGroup>
         <PackageReference Include="CloudinaryDotNet" Version="1.27.6" />
+        <PackageReference Include="Cronos" Version="0.11.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
         <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
+        <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.14\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

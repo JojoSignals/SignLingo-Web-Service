@@ -1,3 +1,4 @@
+using Domain.UserStats.Model.Agreggates;
 using Domain.UserStats.Model.Commands;
 using Domain.UserStats.Model.Responses;
 
@@ -10,4 +11,5 @@ public interface IUserStatsCommandService
     Task<bool> Handle(DeleteUserStatsCommand command);
     Task<bool> Handle(AddExerciseToCompletedCommand command);
     Task<bool> Handle(LostLiveCommand command);
+    Task IncreaseLivesAsync(CancellationToken cancellationToken);
 }

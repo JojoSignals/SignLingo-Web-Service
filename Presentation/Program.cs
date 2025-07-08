@@ -35,6 +35,7 @@ using Presentation.Security.ACL;
 using Presentation.Shared.ACL;
 using Presentation.Shared.ASP.Configuration;
 using Application.UserStats.ACL;
+using Infrastructure.UserStats.CronJobs;
 using Presentation.UserStats.ACL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -142,6 +143,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     }
 });
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddHostedService<IncreaseLivesJob>();
+
+
 
 var jwtConfig = builder.Configuration.GetSection("Auth");
 var secretKey = jwtConfig["SecretKey"];
