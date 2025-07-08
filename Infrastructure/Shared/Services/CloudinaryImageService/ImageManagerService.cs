@@ -31,7 +31,6 @@ public class ImageManagerService : IImageManagerService
             var videoParams = new VideoUploadParams()
             {
                 File = new FileDescription(filename, mediaStream),
-                PublicId = filename
             };
 
             response = await _cloudinaryClient.UploadAsync(videoParams);
@@ -41,7 +40,6 @@ public class ImageManagerService : IImageManagerService
             var imageParams = new ImageUploadParams()
             {
                 File = new FileDescription(filename, mediaStream),
-                PublicId = filename
             };
 
             response = await _cloudinaryClient.UploadAsync(imageParams);
