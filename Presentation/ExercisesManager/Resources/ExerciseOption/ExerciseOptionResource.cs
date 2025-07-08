@@ -4,5 +4,6 @@ public record ExerciseOptionResource(
     int Id,
     string Word,
     string Url,
-    bool IsCorrect
+    bool IsCorrect,
+    string MediaType
     );

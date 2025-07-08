@@ -1,4 +1,4 @@
-using Domain.ExercisesManager.Model.Aggregates;
+﻿using Domain.ExercisesManager.Model.Aggregates;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Entities;
@@ -76,6 +76,7 @@ public class AppDbContext : DbContext
         builder.Entity<Option>().HasKey(op => op.Id);
         builder.Entity<Option>().Property(op => op.Word).IsRequired().HasMaxLength(20);
         builder.Entity<Option>().Property(op => op.UrlImage);
+        builder.Entity<Option>().Property(op => op.MediaType).IsRequired().HasMaxLength(20);
 
         //ExerciseOption
         builder.Entity<ExerciseOption>().ToTable("ExerciseOption");

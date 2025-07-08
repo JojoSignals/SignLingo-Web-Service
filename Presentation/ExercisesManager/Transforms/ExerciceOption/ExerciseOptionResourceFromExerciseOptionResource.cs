@@ -10,7 +10,8 @@ public static class ExerciseOptionResourceFromExerciseOptionResource
             response.Option?.Id ?? 0,
             response.Option?.Word ?? "Not working",
             response.Option?.UrlImage ?? "Not showing",
-            response.IsCorrect
+            response.IsCorrect,
+            response.Option?.MediaType.ToString() ?? "Not showing"
         );
     }
 

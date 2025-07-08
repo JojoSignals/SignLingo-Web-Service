@@ -6,6 +6,7 @@ using Domain.ExercisesManager.Model.Commands;
 using Domain.ExercisesManager.Model.Commands.IconCommands;
 using Domain.ExercisesManager.Model.Entities;
 using Domain.ExercisesManager.Model.Responses;
+using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.ExercisesManager.Repositories;
 using Domain.ExercisesManager.Services;
 using Domain.ExercisesManager.Services.IconServices;
@@ -33,7 +34,7 @@ public class IconCommandService : IIconCommandService
 
     public async Task<IconResponse> Handle(CreateIconCommand command)
     {
-        var imageResponse = await _imageManagerService.UploadAsync(new DateTime().ToString(CultureInfo.InvariantCulture), command.Image);
+        var imageResponse = await _imageManagerService.UploadAsync(new DateTime().ToString(CultureInfo.InvariantCulture), command.Image, MediaType.IMAGE);
         var imageUrl = imageResponse.Url;
 
         // var iconRequest = _mapper.Map<Icon>(command);

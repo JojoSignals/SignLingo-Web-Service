@@ -3,6 +3,7 @@ using Domain.Shared.Model.Responses.ImageManager;
 using Domain.Shared.Services;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Domain.ExercisesManager.Model.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -21,19 +22,36 @@ public class ImageManagerService : IImageManagerService
         this._cloudinaryClient = new Cloudinary(account);
     }
 
-    public async Task<ImageResponse> UploadAsync(string filename, Stream imageStream)
+    public async Task<ImageResponse> UploadAsync(string filename, Stream mediaStream, MediaType mediaType)
     {
-        var uploadParams = new ImageUploadParams()
+        UploadResult response;
+
+        if (mediaType == MediaType.VIDEO)
         {
-            File = new FileDescription(filename, imageStream)
-        };
-        var response = await _cloudinaryClient.UploadAsync(uploadParams);
+            var videoParams = new VideoUploadParams()
+            {
+                File = new FileDescription(filename, mediaStream),
+                PublicId = filename
+            };
+
+            response = await _cloudinaryClient.UploadAsync(videoParams);
+        }
+        else
+        {
+            var imageParams = new ImageUploadParams()
+            {
+                File = new FileDescription(filename, mediaStream),
+                PublicId = filename
+            };
+
+            response = await _cloudinaryClient.UploadAsync(imageParams);
+        }
 
         if (response.StatusCode == HttpStatusCode.OK)
         {
             return new ImageResponse(response.Url.ToString());
         }
 
-        throw new Exception("Error uploading image");
+        throw new Exception("Error uploading media");
     }
 }

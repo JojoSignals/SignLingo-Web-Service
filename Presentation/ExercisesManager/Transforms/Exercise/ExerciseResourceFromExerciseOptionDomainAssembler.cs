@@ -16,7 +16,8 @@ public static class ExerciseResourceFromExerciseOptionDomainAssembler
                     exerciseOption.Option.Id,
                     exerciseOption.Option.Word,
                     exerciseOption.Option.UrlImage,
-                    exerciseOption.IsCorrect
+                    exerciseOption.IsCorrect,
+                    exerciseOption.Option.MediaType.ToString()
                     )
                 );
         }

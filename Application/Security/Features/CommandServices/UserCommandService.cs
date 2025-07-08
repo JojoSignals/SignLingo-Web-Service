@@ -1,6 +1,7 @@
 using Application.Security.Exceptions;
 using Application.Shared.Exceptions;
 using AutoMapper;
+using Domain.ExercisesManager.Model.ValueObjects;
 using Domain.Security.Model.Commands;
 using Domain.Security.Model.Entities;
 using Domain.Security.Model.Responses;
@@ -136,7 +137,7 @@ public class UserCommandService : IUserCommandService
 
         var username = userToUpdate.Username;
 
-        var imageUploaded = await _imageManagerService.UploadAsync(username, command.PictureStream);
+        var imageUploaded = await _imageManagerService.UploadAsync(username, command.PictureStream, MediaType.IMAGE);
         userToUpdate.ProfilePictureUrl = imageUploaded.Url;
 
         await _userRepository.UpdateAsync(userToUpdate);

@@ -33,7 +33,7 @@ public class OptionCommandService : IOptionCommandService
 
         var imageResponse =
             await _imageManagerService.UploadAsync(new DateTime().ToString(CultureInfo.InvariantCulture),
-                command.Image);
+                command.Image, command.MediaType);
         
         var imageUrl = imageResponse.Url;
 
@@ -41,6 +41,7 @@ public class OptionCommandService : IOptionCommandService
         {
             Word = command.Word,
             UrlImage = imageResponse.Url,
+            MediaType = command.MediaType
         };
         
         await _optionRepository.AddAsync(option);
@@ -61,6 +62,7 @@ public class OptionCommandService : IOptionCommandService
         
         existingOption.Word = command.Word;
         existingOption.UrlImage = command.UrlImage;
+        existingOption.MediaType = command.MediaType;
         
         await _optionRepository.UpdateAsync(existingOption);
         await _unitOfWork.CompleteAsync();
