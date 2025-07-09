@@ -3,14 +3,12 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Presentation/Presentation.csproj", "Presentation/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-COPY ["Shared/Shared.csproj", "Shared/"]
 COPY ["Application/Application.csproj", "Application/"]
 RUN dotnet restore "Presentation/Presentation.csproj"
 COPY . .
