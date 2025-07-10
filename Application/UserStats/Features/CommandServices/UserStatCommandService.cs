@@ -94,23 +94,35 @@ public class UserStatCommandService : IUserStatsCommandService
         // 1) Comprueba si ya existe
         var already = entity.UserCompletedExercises
                             .Any(x => x.ExerciseId == command.ExerciseId);
-        if (!already)
+        if (command.IsApproved)
         {
-            // 2) S�lo si no existe, lo agregas
-            var newCompleted = new UserCompletedExercise
+            // 1) Si lo aprueba y NO lo tenía: lo agrega y suma estrella
+            if (!already)
             {
-                ExerciseId = command.ExerciseId,
-                UserStatId = entity.Id
-            };
-            entity.UserCompletedExercises.Add(newCompleted);
-            entity.Stars += 1;
-
-            await _userStatRepository.UpdateAsync(entity);
-            await _unitOfWork.CompleteAsync();
+                entity.UserCompletedExercises.Add(new UserCompletedExercise
+                {
+                    ExerciseId = command.ExerciseId,
+                    UserStatId = entity.Id
+                });
+                entity.Stars += 1;
+            }
+            // si ya lo tenía, no hace nada
+        }
+        else
+        {
+            // 2) Si lo rechaza y NO lo tenía: resta vida
+            if (!already && entity.Lives > 0)
+            {
+                entity.Lives -= 1;
+                entity.TotalLivesLost += 1;
+            }
+            // si ya lo tenía, no resta vida
         }
 
+        // Sólo un save al final (aunque no cambie nada, es idempotente)
+        await _userStatRepository.UpdateAsync(entity);
+        await _unitOfWork.CompleteAsync();
         return true;
-
     }
 
     public async Task<bool> Handle(LostLiveCommand command)

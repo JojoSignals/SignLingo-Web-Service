@@ -53,17 +53,8 @@ public class UserStatController : ControllerBase
     [HttpPost("validate-exercise/{id:int}")]
     public async Task<IActionResult> ValidateExercise(int id, [FromBody] ValidateExerciseResource resource)
     {
-        if (resource.IsApproved)
-        {
-            var command = new AddExerciseToCompletedCommand(id);
-            await _commandService.Handle(command);
-        }
-        else
-        {
-            var command = new LostLiveCommand();
-            await _commandService.Handle(command);
-        }
-
-        return NoContent();
+        var command = new AddExerciseToCompletedCommand(id, resource.IsApproved);
+        var result = await _commandService.Handle(command);
+        return Ok(result);
     }
 }
