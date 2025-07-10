@@ -222,6 +222,7 @@ app.MapControllers();
 
 app.Run();
 return;
+Console.WriteLine("Hash: " + BCrypt.Net.BCrypt.HashPassword("elwe123", workFactor: 12));
 
 // Method to handle database creation
 void EnsureDatabaseCreation(WebApplication appArgs)
@@ -230,4 +231,6 @@ void EnsureDatabaseCreation(WebApplication appArgs)
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.EnsureCreated();
     AppDbContextSeed.LoadQuestionType(context);
+    AppDbContextSeed.LoadUsersDataAsync(context).GetAwaiter().GetResult();
 }
+
