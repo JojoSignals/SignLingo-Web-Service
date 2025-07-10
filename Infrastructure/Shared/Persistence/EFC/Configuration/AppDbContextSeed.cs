@@ -24,32 +24,6 @@ public static class AppDbContextSeed
 
 
     }
-    
-    private static async Task LoadUsersDataAsync(AppDbContext context)
-    {
-        // Evita duplicar el registro cada vez que arranca la app
-        if (await context.Users.AnyAsync()) return;
-
-        var user = new User()
-        {
-            Username         = "elweoficial",
-            Email            = "elwe@gmail.com",
-            PasswordHash     = "elwe123",
-            ProfilePictureUrl = null,    
-            Role             = UserRoles.ADMIN,
-            IsVip            = false
-        };
-
-        try
-        {
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Error saving users in database", ex);
-        }
-    }
 
 
     public static async Task LoadUsersDataAsync(AppDbContext context)
