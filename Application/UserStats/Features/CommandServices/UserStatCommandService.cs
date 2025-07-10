@@ -103,6 +103,7 @@ public class UserStatCommandService : IUserStatsCommandService
                 UserStatId = entity.Id
             };
             entity.UserCompletedExercises.Add(newCompleted);
+            entity.Stars += 1;
 
             await _userStatRepository.UpdateAsync(entity);
             await _unitOfWork.CompleteAsync();

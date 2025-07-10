@@ -12,4 +12,5 @@ public class UserCompletedExercise
     public UserStat UserStat { get; set; }
 
     public int ExerciseId { get; set; }
+    
 }
