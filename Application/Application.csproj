@@ -16,7 +16,9 @@
       <Folder Include="Advertisement\" />
       <Folder Include="ExercisesManager\Features\OutboundServices\ACL\" />
       <Folder Include="Notification\" />
-      <Folder Include="Ranking\" />
+      <Folder Include="Ranking\Exceptions\" />
+      <Folder Include="Ranking\Features\CommandServices\" />
+      <Folder Include="Ranking\Features\OutboundServices\" />
       <Folder Include="Transaction\" />
     </ItemGroup>
 

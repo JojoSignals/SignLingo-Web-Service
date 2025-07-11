@@ -30,7 +30,9 @@
     <ItemGroup>
         <Folder Include="Advertisement\Controllers\" />
         <Folder Include="Notification\Controllers\" />
-        <Folder Include="Ranking\Controllers\" />
+        <Folder Include="Ranking\ACL\" />
+        <Folder Include="Ranking\Resources\" />
+        <Folder Include="Ranking\Transforms\" />
         <Folder Include="Security\Controllers\" />
         <Folder Include="Shared\Controllers\" />
         <Folder Include="Transaction\Controllers\" />

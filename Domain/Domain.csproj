@@ -9,7 +9,11 @@
     <ItemGroup>
       <Folder Include="Advertisement\" />
       <Folder Include="Notification\" />
-      <Folder Include="Ranking\" />
+      <Folder Include="Ranking\Model\Agreggates\" />
+      <Folder Include="Ranking\Model\Commands\" />
+      <Folder Include="Ranking\Model\Queries\" />
+      <Folder Include="Ranking\Model\Responses\" />
+      <Folder Include="Ranking\Model\ValueObjects\" />
       <Folder Include="Security\Model\Entities\" />
       <Folder Include="Transaction\" />
       <Folder Include="UserStats\Model\Entities\" />
