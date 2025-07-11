@@ -40,11 +40,11 @@ public class UserCommandService : IUserCommandService
 
     public async Task<(UserResponse user, string token)> Handle(SignInCommand command)
     {
-        /*var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
+        var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
         if (!isCaptchaValid)
         {
             throw new InvalidCaptchaException();
-        }*/
+        }
 
         var existingUser = await _userRepository.GetUserByEmailAsync(command.Email);
         if (existingUser == null)
