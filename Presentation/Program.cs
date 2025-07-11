@@ -35,6 +35,7 @@ using Presentation.Security.ACL;
 using Presentation.Shared.ACL;
 using Presentation.Shared.ASP.Configuration;
 using Application.UserStats.ACL;
+using Infrastructure.Shared.Services.EmailSenderSevice;
 using Infrastructure.UserStats.CronJobs;
 using Presentation.UserStats.ACL;
 
@@ -104,6 +105,7 @@ builder.Services.AddScoped<IUserStatsQueryService, UserStatQueryService>();
 builder.Services.AddScoped<IUserStatContextFacade, UserStatContextFacade>();
 builder.Services.AddScoped<IUserStatContextService, UserStatContextService>();
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddHttpClient();
 
