@@ -13,6 +13,6 @@ public class RankingQueryService : IRankingQueryService
         _repo = repo;
     }
 
-    public Task<IReadOnlyCollection<RankingEntry>> GetTopRankingAsync(int page, int pageSize, int currentUserId)
-        => _repo.GetTopRankingAsync(page, pageSize, currentUserId);
+    public Task<IReadOnlyCollection<RankingEntry>> GetTopRankingAsync(int page, int pageSize)
+        => _repo.GetTopRankingAsync(page, pageSize);
 }

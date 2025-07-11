@@ -1,8 +1,9 @@
 using Application.Ranking.ACL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Ranking.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("ranking")]
 public class RankingController : ControllerBase

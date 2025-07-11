@@ -14,7 +14,7 @@ public class RankingRepository : IRankingRepository
         _context = context;
     }
 
-    public async Task<IReadOnlyCollection<RankingEntry>> GetTopRankingAsync(int page, int pageSize, int currentUserId)
+    public async Task<IReadOnlyCollection<RankingEntry>> GetTopRankingAsync(int page, int pageSize)
     {
         var joinedQuery = _context.UserStats
             .Join(_context.Users,
@@ -38,7 +38,6 @@ public class RankingRepository : IRankingRepository
                 ProfilePictureUrl = x.ProfilePictureUrl ?? string.Empty,
                 Stars = x.Stars,
                 Position = idx + 1 + ((page - 1) * pageSize),
-                IsCurrentUser = x.Id == currentUserId
             });
 
         return joinedQuery.ToList();

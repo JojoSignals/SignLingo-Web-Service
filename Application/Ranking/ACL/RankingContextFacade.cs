@@ -6,20 +6,15 @@ namespace Application.Ranking.ACL;
 public class RankingContextFacade : IRankingContextFacade
 {
     private readonly IRankingQueryService _query;
-    private readonly ISecurityContextFacade _security;
 
-    public RankingContextFacade(IRankingQueryService query, ISecurityContextFacade security)
+    public RankingContextFacade(IRankingQueryService query)
     {
         _query = query;
-        _security = security;
     }
 
     public async Task<IReadOnlyCollection<RankingDto>> FetchRankingAsync(int page, int pageSize)
     {
-        int currentUserId = _security.FetchUserIdByToken("token"); // ⚠️ Solo si manejas token directamente aquí
-        // Idealmente obtén el userId desde IExternalSecurityService si estás en capa Presentation
-
-        var entries = await _query.GetTopRankingAsync(page, pageSize, currentUserId);
+        var entries = await _query.GetTopRankingAsync(page, pageSize);
 
         return entries.Select(e => new RankingDto
         {
@@ -28,7 +23,6 @@ public class RankingContextFacade : IRankingContextFacade
             ProfilePictureUrl = e.ProfilePictureUrl,
             Stars = e.Stars,
             Position = e.Position,
-            IsCurrentUser = e.IsCurrentUser
         }).ToList();
     }
 }
