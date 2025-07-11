@@ -63,11 +63,11 @@ public class UserCommandService : IUserCommandService
 
     public async Task<UserResponse> Handle(SignUpCommand command)
     {
-        /*var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
+        var isCaptchaValid = await _captchaService.ValidateAsync(command.CaptchaResponse);
         if (!isCaptchaValid)
         {
             throw new InvalidCaptchaException();
-        }*/
+        }
 
         var userWithSameEmail = await _userRepository.GetUserByEmailAsync(command.Email);
         if (userWithSameEmail != null)
