@@ -37,6 +37,12 @@ using Presentation.Shared.ASP.Configuration;
 using Application.UserStats.ACL;
 using Infrastructure.UserStats.CronJobs;
 using Presentation.UserStats.ACL;
+using Domain.Ranking.Repositories;
+using Infrastructure.Ranking.Persistence;
+using Application.Ranking.Features.QueryServices;
+using Application.Ranking.ACL;
+using Domain.Ranking.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +109,11 @@ builder.Services.AddScoped<IUserStatsQueryService, UserStatQueryService>();
 builder.Services.AddScoped<IUserStatsQueryService, UserStatQueryService>();
 builder.Services.AddScoped<IUserStatContextFacade, UserStatContextFacade>();
 builder.Services.AddScoped<IUserStatContextService, UserStatContextService>();
+
+//Ranking
+builder.Services.AddScoped<IRankingRepository, RankingRepository>();
+builder.Services.AddScoped<IRankingQueryService, RankingQueryService>();
+builder.Services.AddScoped<IRankingContextFacade, RankingContextFacade>();
 
 
 builder.Services.AddHttpClient();
