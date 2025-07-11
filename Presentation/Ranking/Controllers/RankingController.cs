@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Ranking.Controllers;
 
 [ApiController]
-[Route("api/v1/ranking")]
+[Route("ranking")]
 public class RankingController : ControllerBase
 {
     private readonly IRankingContextFacade _facade;

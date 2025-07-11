@@ -115,6 +115,7 @@ builder.Services.AddScoped<IRankingRepository, RankingRepository>();
 builder.Services.AddScoped<IRankingQueryService, RankingQueryService>();
 builder.Services.AddScoped<IRankingContextFacade, RankingContextFacade>();
 
+
 builder.Services.AddHttpClient();
 
 //Conexion a MySQL 
